@@ -1,69 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Vyshnavi Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Student Portal</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
-      margin: 0;
-    }
-    .dashboard { 
-      max-width: 600px; 
-      margin: 0 auto; 
-      background: white; 
-      padding: 30px; 
-      border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    h1 { color: #764ba2; margin-bottom: 5px; }
-    .roll { color: #666; margin-bottom: 25px; }
-    .card { 
-      background: #f8f9ff; 
-      padding: 15px; 
-      margin: 15px 0; 
-      border-radius: 10px;
-      border-left: 4px solid #667eea;
-    }
-    .card h3 { margin: 0 0 10px 0; color: #333; }
-    .logout { 
-      background: #ff4757; 
-      color: white; 
-      padding: 12px 30px; 
-      border: none; 
-      border-radius: 8px; 
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 20px;
-    }
-    .logout:hover { background: #e84118; }
+    body { font-family: Arial; background: #f0f2f5; margin: 0; padding: 20px; }
+    .header { background: #1a73e8; color: white; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
+    .card { background: white; padding: 30px; border-radius: 12px; margin-top: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    button { background: #d93025; color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; }
+    button:hover { background: #b02318; }
+    h2 { margin: 0; }
+    h3 { color: #1a73e8; }
   </style>
 </head>
 <body>
-  <div class="dashboard">
-    <h1>Welcome, Vyshnavi 👋</h1>
-    <p class="roll">Roll No: 244637s | BSc Computers - 1st Year</p>
-    
-    <div class="card">
-      <h3>📚 Your Subjects & Marks</h3>
-      <p>Mathematics: 85/100</p>
-      <p>Computer Science: 92/100</p>
-      <p>English: 78/100</p>
-    </div>
-    
-    <div class="card">
-      <h3>📅 Attendance</h3>
-      <p>Present: 92% | Total Classes: 50</p>
-    </div>
-    
-    <div class="card">
-      <h3>📝 Pending Assignments</h3>
-      <p>1. HTML Project - Due: 10th Oct</p>
-      <p>2. Maths Assignment - Due: 12th Oct</p>
-    </div>
-    
-    <button class="logout" onclick="window.location.href='index.html'">Logout</button>
+  <div class="header">
+    <h2>🎓 Student Dashboard</h2>
+    <button id="logoutBtn">Logout</button>
   </div>
+  <div class="card">
+    <h3>Welcome, <span id="userEmail">Loading...</span>!</h3>
+    <p>You are successfully logged in to Student Portal.</p>
+    <p>✅ Firebase Authentication is working</p>
+    <p>✅ Your data is secure</p>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyDFoDQ06mbw2Qajx92C6TjbeHOOe_BByRU",
+      authDomain: "student-login-page-b90a8.firebaseapp.com",
+      projectId: "student-login-page-b90a8",
+      storageBucket: "student-login-page-b90a8.firebasestorage.app",
+      messagingSenderId: "72064863710",
+      appId: "1:72064863710:web:8cc415a42cca1acdc8214f"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('userEmail').textContent = user.email;
+      } else {
+        window.location.href = 'login.html';
+      }
+    });
+    
+    document.getElementById('logoutBtn').onclick = () => {
+      signOut(auth);
+    };
+  </script>
 </body>
-      </html>
+</html>
