@@ -46,15 +46,13 @@
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Login ayina evaraina chudochu - admin check ledu
         document.getElementById('userEmail').innerText = `Logged in as: ${user.email}`;
         loadAllStudents();
       } else {
-        window.location.href = "index.html"; // Login avvakapothe login page ki pampu
+        window.location.href = "index.html";
       }
     });
 
-    // Firestore nunchi anni students data teesukuni table lo chupinchu
     async function loadAllStudents() {
       const querySnapshot = await getDocs(collection(db, "students"));
       let tableHTML = `
