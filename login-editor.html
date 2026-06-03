@@ -28,6 +28,7 @@
       width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2);
       border: none; border-radius: 10px; color: white; font-size: 18px; font-weight: bold; cursor: pointer;
     }
+    .login-btn:hover { opacity: 0.9; }
     .error-msg { color: #ff6b6b; text-align: center; margin-top: 15px; display: none; }
     
     .editor-container {
@@ -50,6 +51,7 @@
     .output-header { background: #252526; padding: 10px 20px; color: #cccccc; border-bottom: 1px solid #3e3e42; font-size: 14px; }
     #output { flex: 1; padding: 20px; color: #00ff00; font-family: 'Consolas', monospace; font-size: 14px; overflow-y: auto; white-space: pre-wrap; }
     .run-btn { padding: 12px 30px; background: #0e639c; border: none; color: white; cursor: pointer; font-size: 16px; font-weight: bold; margin: 10px; border-radius: 5px; }
+    .run-btn:hover { background: #1177bb; }
     @media (max-width: 768px) {
       .editor-body { flex-direction: column; min-height: 600px; }
       .code-area { border-right: none; border-bottom: 1px solid #3e3e42; min-height: 300px; }
@@ -77,8 +79,7 @@
     </div>
     <div class="editor-body">
       <div class="code-area">
-        <textarea id="codeInput">
-console.log('Hello Vyshnavi 💚');
+        <textarea id="codeInput">console.log('Hello Vyshnavi 💚');
 
 let a = 10;
 let b = 20;
@@ -141,4 +142,4 @@ for(let i=1; i<=5; i++) {
     }
   </script>
 </body>
-    </html>
+          </html>
