@@ -20,6 +20,17 @@ Example: console.log('Hello Vyshnavi')"></textarea>
     <div id="output"></div>
 
     <script>
+        // Auto save code when you type
+window.onload = function() {
+    let savedCode = localStorage.getItem('myCode');
+    if(savedCode) {
+        document.getElementById('editor').value = savedCode;
+    }
+}
+
+document.getElementById('editor').addEventListener('input', function() {
+    localStorage.setItem('myCode', this.value);
+});
         function runCode() {
             let code = document.getElementById('editor').value;
             let output = document.getElementById('output');
