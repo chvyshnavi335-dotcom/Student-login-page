@@ -1,238 +1,211 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login + VS Code Editor 💚</title>
+  <title>Student Login + VS Black Editor</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap');
-    
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
     body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(45deg, #0f2027, #203a43, #2c5364);
-      overflow: hidden;
+      padding: 20px;
     }
-    
-    /* Animated Background */
-  .circles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; }
-  .circles li { position: absolute; display: block; list-style: none; width: 20px; height: 20px; background: rgba(255, 255, 255, 0.1); animation: animate 25s linear infinite; bottom: -150px; border-radius: 50%; }
-  .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
-  .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
-  .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
-  .circles li:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
-  .circles li:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
-  .circles li:nth-child(6) { left: 75%; width: 110px; height: 110px; animation-delay: 3s; }
-  .circles li:nth-child(7) { left: 35%; width: 150px; height: 150px; animation-delay: 7s; }
-  .circles li:nth-child(8) { left: 50%; width: 25px; height: 25px; animation-delay: 15s; animation-duration: 45s; }
-  .circles li:nth-child(9) { left: 20%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 35s; }
-  .circles li:nth-child(10) { left: 85%; width: 150px; height: 150px; animation-delay: 0s; animation-duration: 11s; }
-    
-    @keyframes animate {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; border-radius: 0; }
-      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; border-radius: 50%; }
-    }
-    
-    /* LOGIN BOX */
-  .login-box {
-      position: relative;
-      width: 400px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
       padding: 40px;
-      z-index: 1;
-      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .login-container h2 {
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+    }
+    .input-group input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .login-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+    }
+    .error-msg {
+      color: #ff6b6b;
+      text-align: center;
+      margin-top: 15px;
+      display: none;
     }
     
-  .login-box h2 { color: #fff; text-align: center; font-size: 32px; margin-bottom: 30px; font-weight: 600; }
-  .input-box { position: relative; margin-bottom: 30px; }
-  .input-box input {
-      width: 100%; padding: 15px 20px; background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 35px; outline: none;
-      color: #fff; font-size: 16px; transition: 0.3s;
-    }
-  .input-box input::placeholder { color: rgba(255, 255, 255, 0.6); }
-  .input-box input:focus { border-color: #58a6ff; background: rgba(255, 255, 255, 0.15); }
-  .btn {
-      width: 100%; padding: 15px; background: linear-gradient(45deg, #58a6ff, #1f6feb);
-      border: none; border-radius: 35px; color: #fff; font-size: 18px; font-weight: 600;
-      cursor: pointer; transition: 0.3s; margin-bottom: 20px;
-    }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(88, 166, 255, 0.3); }
-  .error { color: #f85149; text-align: center; margin-top: 10px; display: none; }
-
-    /* VS CODE EDITOR - LOGIN TARUVATA KANIPISTADI */
-  .editor-container {
+    /* Editor Styles */
+    .editor-container {
       display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      width: 100%;
+      max-width: 1400px;
+      height: 90vh;
       background: #1e1e1e;
-      z-index: 100;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.5s ease;
+    }
+    .editor-header {
+      background: #2d2d30;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #3e3e42;
+    }
+    .editor-header h3 {
+      color: #cccccc;
+      font-size: 16px;
+    }
+    .logout-btn {
+      padding: 8px 20px;
+      background: #e74c3c;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .logout-btn:hover {
+      background: #c0392b;
+    }
+    .editor-body {
+      display: flex;
+      height: calc(100% - 60px);
+    }
+    .code-area {
+      flex: 1;
+      display: flex;
       flex-direction: column;
+      border-right: 1px solid #3e3e42;
     }
-  .editor-header {
-      background: #323233; color: #cccccc; padding: 10px 20px;
-      display: flex; justify-content: space-between; align-items: center;
-      border-bottom: 1px solid #2d2d2d;
+    .code-area textarea {
+      flex: 1;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border: none;
+      padding: 20px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 15px;
+      resize: none;
+      outline: none;
     }
-  .editor-header h3 { font-size: 14px; font-weight: normal; }
-  .editor-header button {
-      background: #0e639c; color: white; border: none; padding: 6px 14px;
-      border-radius: 4px; cursor: pointer; font-size: 13px;
+    .output-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #1e1e1e;
     }
-  .editor-header button:hover { background: #1177bb; }
-  .logout-btn { background: #da3633 !important; margin-left: 10px; }
-  .logout-btn:hover { background: #f85149 !important; }
-  
-  .editor-body { display: flex; flex: 1; overflow: hidden; }
-  .code-area { flex: 1; display: flex; flex-direction: column; }
-  .code-area textarea {
-      flex: 1; background: #1e1e1e; color: #d4d4d4; border: none; outline: none;
-      padding: 15px; font-family: 'Fira Code', monospace; font-size: 14px;
-      resize: none; border-right: 1px solid #2d2d2d;
+    .output-header {
+      background: #252526;
+      padding: 10px 20px;
+      color: #cccccc;
+      border-bottom: 1px solid #3e3e42;
+      font-size: 14px;
     }
-  .output-area {
-      flex: 1; background: #1e1e1e; color: #d4d4d4; padding: 15px;
-      font-family: 'Fira Code', monospace; font-size: 14px; overflow: auto;
-      border-top: 2px solid #007acc;
+    #output {
+      flex: 1;
+      padding: 20px;
+      color: #00ff00;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 14px;
+      overflow-y: auto;
+      white-space: pre-wrap;
     }
-  .output-area h4 { color: #007acc; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; }
-  .run-btn {
-      position: absolute; bottom: 20px; right: 20px; background: #238636;
-      color: white; border: none; padding: 10px 20px; border-radius: 6px;
-      cursor: pointer; font-weight: bold; z-index: 101;
+    .run-btn {
+      padding: 12px 30px;
+      background: #0e639c;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px;
+      border-radius: 5px;
     }
-  .run-btn:hover { background: #2ea043; }
-
-    @media (max-width: 450px) { .login-box { width: 90%; padding: 30px 20px; } }
+    .run-btn:hover {
+      background: #1177bb;
+    }
+    @media (max-width: 768px) {
+      .editor-body {
+        flex-direction: column;
+      }
+      .code-area {
+        border-right: none;
+        border-bottom: 1px solid #3e3e42;
+      }
+    }
   </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <!-- Background Animation -->
-  <ul class="circles">
-    <li></li><li></li>
-    <li></li><li></li>
-  </ul>
-
-  <!-- LOGIN BOX -->
-  <div class="login-box" id="loginBox">
-    <h2>Welcome Vyshnavi 💚</h2>
-    <form id="loginForm">
-      <div class="input-box">
-        <input type="email" id="email" placeholder="Email" required>
-      </div>
-      <div class="input-box">
-        <input type="password" id="password" placeholder="Password" required>
-      </div>
-      <button type="submit" class="btn">Login</button>
-      <div class="error" id="errorMsg">Wrong Email or Password 😅</div>
-    </form>
+  <!-- Login Page -->
+  <div class="login-container" id="loginPage">
+    <h2><i class="fas fa-graduation-cap"></i> Student Login</h2>
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Email: vyshnavi@gmail.com">
+    </div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Password: 123456">
+    </div>
+    <button class="login-btn" onclick="login()">Login</button>
+    <div class="error-msg" id="errorMsg">Invalid email or password!</div>
   </div>
 
-  <!-- VS BLACK CODE EDITOR -->
-  <div class="editor-container" id="editorContainer">
+  <!-- VS Black Editor -->
+  <div class="editor-container" id="editorPage">
     <div class="editor-header">
       <h3><i class="fas fa-code"></i> VS Black Editor - Welcome Vyshnavi 💚</h3>
       <div>
         <button onclick="logout()" class="logout-btn">Logout</button>
       </div>
+    </div>
     <div class="editor-body">
       <div class="code-area">
-        <textarea id="codeInput" placeholder="// Nee JavaScript code ikkada raayi Vyshnavi
-console.log('Hello Vyshnavi 💚');
-
-let a = 10;
-let b = 20;
-console.log('Sum = ' + (a + b));
-
-// For loop test
-for(let i=1; i<=5; i++) {
-  console.log('Number: ' + i);
-}"></textarea>
-      </div>
-      <div class="output-area">
-        <h4>Output</h4>
-        <div id="output">Run kottu Vyshnavi... Output ikkada kanipistadi 🚀</div>
-      </div>
-    </div>
-    <button class="run-btn" onclick="runCode()"><i class="fas fa-play"></i> Run Code</button>
-  </div>
-
-  <script>
-    // LOGIN LOGIC
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      let email = document.getElementById('email').value;
-      let password = document.getElementById('password').value;
-      
-      // Demo Login - Nuvvu marchukovachu
-      if(email === "vyshnavi@gmail.com" && password === "123456") {
-        document.getElementById('loginBox').style.display = 'none';
-        document.getElementById('editorContainer').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.getElementById('errorMsg').style.display = 'block';
-        setTimeout(() => {
-          document.getElementById('errorMsg').style.display = 'none';
-        }, 3000);
-      }
-    });
-
-    function logout() {
-      if(confirm("Logout avvala Vyshnavi?")) {
-        document.getElementById('editorContainer').style.display = 'none';
-        document.getElementById('loginBox').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        document.getElementById('email').value = '';
-        document.getElementById('password').value = '';
-        document.getElementById('output').innerHTML = 'Run kottu Vyshnavi... Output ikkada kanipistadi 🚀';
-      }
-    }
-
-    // CODE RUN FUNCTION
-    function runCode() {
-      let code = document.getElementById('codeInput').value;
-      let outputDiv = document.getElementById('output');
-      outputDiv.innerHTML = '';
-      
-      // Console.log ni capture cheyyi
-      let logs = [];
-      const originalLog = console.log;
-      console.log = function(...args) {
-        logs.push(args.join(' '));
-        originalLog.apply(console, args);
-      };
-      
-      try {
-        // Code run cheyyi
-        eval(code);
-        if(logs.length > 0) {
-          outputDiv.innerHTML = logs.join('<br>');
-        } else {
-          outputDiv.innerHTML = 'Code run ayyindi kani console.log ledu Vyshnavi 😅';
-        }
-        outputDiv.style.color = '#4ec9b0'; // Success color
-      } catch (err) {
-        outputDiv.innerHTML = 'Error: ' + err.message;
-        outputDiv.style.color = '#f85149'; // Error color
-      }
-      
-      console.log = originalLog; // Console back to normal
-    }
-
-    // Ctrl+Enter tho run avvali
-    document.getElementById('codeInput').addEventListener('keydown', function(e) {
-      if(e.ctrlKey && e.key === 'Enter') {
-        runCode();
-      }
-    });
-  </script>
-</body>
-  </html>
+        <textarea id="codeInput" placeholder="
