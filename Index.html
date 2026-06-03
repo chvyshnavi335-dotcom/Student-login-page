@@ -28,12 +28,11 @@
       width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2);
       border: none; border-radius: 10px; color: white; font-size: 18px; font-weight: bold; cursor: pointer;
     }
-    .login-btn:hover { opacity: 0.9; }
     .error-msg { color: #ff6b6b; text-align: center; margin-top: 15px; display: none; font-weight: bold; }
   </style>
 </head>
 <body>
-  <div class="login-container" id="loginPage">
+  <div class="login-container">
     <h2><i class="fas fa-graduation-cap"></i> Student Login</h2>
     <div class="input-group">
       <input type="email" id="email" placeholder="Email: vyshnavi@gmail.com">
@@ -53,8 +52,7 @@
       
       if(email === 'vyshnavi@gmail.com' && password === '123456') {
         errorMsg.style.display = 'none';
-        // Login ayyaka nee dashboard ki pampistadi
-        window.location.href = 'dashboard.html';
+        window.location.href = 'ButtonClick.html';
       } else {
         errorMsg.style.display = 'block';
       }
