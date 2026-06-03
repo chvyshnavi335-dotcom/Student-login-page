@@ -20,19 +20,37 @@ Example: console.log('Hello Vyshnavi')"></textarea>
     <div id="output"></div>
 
     <script>
-        // Auto save code when you type
+        // Multi-user - evaru open chesina vaallake separate
 window.onload = function() {
-    // 1. Page load ayyaka old code load cheyyi
-    let savedCode = localStorage.getItem('myCode');
-    if(savedCode) {
-        document.getElementById('editor').value = savedCode;
+    let username = localStorage.getItem('currentUser');
+    if(!username) {
+        username = prompt("Welcome! Nee peru enter cheyyi:");
+        if(!username || username.trim() === "") {
+            username = "Guest" + Math.floor(Math.random() * 100);
+        }
+        localStorage.setItem('currentUser', username);
     }
     
-    // 2. Type chesinappudu save cheyyi - idi window.onload lopala pettadam important
+    document.querySelector('h1').innerText = `Hi ${username} 💚 | Your Editor`;
+    
+    let userCode = localStorage.getItem('user_' + username);
+    if(userCode) {
+        document.getElementById('editor').value = userCode;
+    } else {
+        document.getElementById('editor').value = "// Hi " + username + "\n// Code raayu ikkada";
+    }
+    
     document.getElementById('editor').addEventListener('input', function() {
-        localStorage.setItem('myCode', this.value);
+        localStorage.setItem('user_' + username, this.value);
     });
 };
+
+function logout() {
+    if(confirm("User change cheyyala?")) {
+        localStorage.removeItem('currentUser');
+        location.reload();
+    }
+        }
         function runCode() {
             let code = document.getElementById('editor').value;
             let output = document.getElementById('output');
