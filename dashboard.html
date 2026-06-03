@@ -6,13 +6,38 @@
     <style>
         body { background: #1e1e1e; color: white; font-family: monospace; margin: 0; padding: 0; }
         .header { background: #333; padding: 15px; font-size: 18px; }
-        .btn { background: #0e639c; color: white; padding: 10px 20px; border: none; margin: 10px; }
-        textarea { width: 94%; height: 70vh; background: #1e1e1e; color: #d4d4d4; border: 1px solid #444; margin: 10px; padding: 10px; }
+        .btn { background: #0e639c; color: white; padding: 10px 15px; border: none; margin: 10px; cursor: pointer; }
+        #editor { width: 94%; height: 50vh; background: #1e1e1e; color: #d4d4d4; border: 1px solid #444; margin: 10px; padding: 10px; font-size: 14px; }
+        #output { width: 94%; height: 20vh; background: #000; color: #00ff00; border: 1px solid #444; margin: 10px; padding: 10px; font-size: 14px; overflow: auto; }
     </style>
 </head>
 <body>
     <div class="header">VS Code Editor</div>
-    <button class="btn" onclick="alert('Running...')">RUN CODE</button>
-    <textarea placeholder="Write your code here..."></textarea>
+    <button class="btn" onclick="runCode()">RUN CODE</button>
+    <textarea id="editor" placeholder="Write JavaScript code here...
+Example: console.log('Hello Vyshnavi')"></textarea>
+    <div style="margin-left:10px;">Output:</div>
+    <div id="output"></div>
+
+    <script>
+        function runCode() {
+            let code = document.getElementById('editor').value;
+            let output = document.getElementById('output');
+            output.innerHTML = ''; // clear old output
+            
+            // Hijack console.log to show in output div
+            let oldLog = console.log;
+            console.log = function(msg) {
+                output.innerHTML += msg + '<br>';
+                oldLog.apply(console, arguments);
+            }
+            
+            try {
+                eval(code); // Run the code
+            } catch (e) {
+                output.innerHTML += 'Error: ' + e.message;
+            }
+        }
+    </script>
 </body>
 </html>
