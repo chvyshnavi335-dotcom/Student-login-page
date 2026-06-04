@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Vyshnavi Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: linear-gradient(135deg, #667eea, #764ba2);
       font-family: 'Segoe UI', sans-serif;
+    }
+    /* DASHBOARD CARD */
+    .dashboard {
       display: flex; justify-content: center; align-items: center;
       min-height: 100vh; padding: 20px;
     }
@@ -19,48 +22,96 @@
     }
     h1 { font-size: 24px; margin-bottom: 10px; color: #333; }
     p { color: #666; margin-bottom: 20px; }
-    .stats {
-      font-weight: bold; margin-bottom: 30px; color: #333;
-      font-size: 16px;
-    }
+    .stats { font-weight: bold; margin-bottom: 30px; color: #333; }
     button {
       width: 100%; padding: 15px; margin: 8px 0; border: none;
-      border-radius: 10px; font-size: 16px; font-weight: 600;
-      cursor: pointer; transition: 0.3s;
+      border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;
     }
-    .logout {
-      background: #667eea; color: white;
-    }
-    .logout:hover { background: #5a67d8; }
-    .playground {
-      background: #4c51bf; color: white;
-    }
-    .playground:hover { background: #434190; }
+    .logout { background: #667eea; color: white; }
+    .playground { background: #4c51bf; color: white; }
     
-    /* Playground ni hide cheyyi first */
-    #editorPage { display: none; }
-    .show { display: block !important; }
-    .hide { display: none !important; }
+    /* EDITOR - First hide cheyyi */
+    .editor-page { display: none; background: #1a1a2e; color: #fff; }
+    .header {
+      background: #0f3460; padding: 15px 20px; display: flex;
+      justify-content: space-between; align-items: center;
+      border-bottom: 2px solid #4ecdc4;
+    }
+    .header h1 { font-size: 20px; color: #4ecdc4; margin: 0; }
+    .header span { color: #4ecdc4; }
+    .header button { width: auto; background: #ff6b6b; color: white; padding: 8px 15px; }
+    .container { display: flex; height: calc(100vh - 60px); }
+    .editors { width: 50%; display: flex; flex-direction: column; }
+    .tabs { display: flex; background: #16213e; }
+    .tab { padding: 12px 20px; cursor: pointer; border: none; background: #16213e; color: #aaa; }
+    .tab.active { background: #1a1a2e; color: #4ecdc4; border-bottom: 2px solid #4ecdc4; }
+    .editor { flex: 1; display: none; }
+    .editor.active { display: block; }
+    textarea {
+      width: 100%; height: 100%; background: #1a1a2e; color: #fff;
+      border: none; padding: 15px; font-family: 'Courier New'; font-size: 14px; outline: none;
+    }
+    .preview { width: 50%; background: #fff; display: flex; flex-direction: column; }
+    .preview-header { background: #16213e; padding: 12px 20px; display: flex; justify-content: space-between; }
+    .preview-header span { color: #4ecdc4; font-weight: 600; }
+    .run-btn { width: auto; background: #4ecdc4; color: #000; padding: 8px 20px; }
+    iframe { flex: 1; border: none; background: white; }
+    @media(max-width: 768px) {
+      .container { flex-direction: column; }
+      .editors { width: 100%; height: 60vh; }
+      .preview { width: 100%; height: 40vh; }
+    }
   </style>
 </head>
 <body>
-  <!-- DASHBOARD PAGE -->
-  <div class="card" id="dashboardPage">
-    <h1>Hi Vyshnavi 👋</h1>
-    <p>Dashboard ki welcome</p>
-    <div class="stats">Courses: 5 | Attendance: 85%</div>
-    <button class="logout" onclick="logout()">Logout</button>
-    <button class="playground" onclick="openEditor()">Open Playground 💻</button>
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboardPage">
+    <div class="card">
+      <h1>Hi Vyshnavi 👋</h1>
+      <p>Dashboard ki welcome</p>
+      <div class="stats">Courses: 5 | Attendance: 85%</div>
+      <button class="logout" onclick="logout()">Logout</button>
+      <button class="playground" onclick="openEditor()">Open Playground 💻</button>
+    </div>
   </div>
 
-  <!-- EDITOR PAGE - Nenu mundu ichina code idhi -->
-  <div id="editorPage">
-    <!-- Ikkada manam mundu chesina Editor code vastadi -->
-    <iframe src="editor.html" style="width:100vw; height:100vh; border:none;"></iframe>
+  <!-- EDITOR -->
+  <div class="editor-page" id="editorPage">
+    <div class="header">
+      <h1>Vyshnavi 💚 | <span>Web Playground</span></h1>
+      <button onclick="goBack()">← Dashboard</button>
+    </div>
+    <div class="container">
+      <div class="editors">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('html')">HTML</button>
+          <button class="tab" onclick="showTab('css')">CSS</button>
+          <button class="tab" onclick="showTab('js')">JS</button>
+        </div>
+        <div class="editor active" id="html-editor">
+          <textarea id="html"><h1>Hello Vyshnavi 💚</h1>
+<button onclick="alert('Working')">Click Me</button></textarea>
+        </div>
+        <div class="editor" id="css-editor">
+          <textarea id="css">body { font-family: Arial; text-align: center; padding: 50px; }
+h1 { color: #4ecdc4; }
+button { padding: 15px 30px; background: #4ecdc4; border: none; border-radius: 10px; cursor: pointer; }</textarea>
+        </div>
+        <div class="editor" id="js-editor">
+          <textarea id="js">console.log('Hi Vyshnavi');</textarea>
+        </div>
+      </div>
+      <div class="preview">
+        <div class="preview-header">
+          <span>Live Output</span>
+          <button class="run-btn" onclick="runCode()">▶ Run</button>
+        </div>
+        <iframe id="output"></iframe>
+      </div>
+    </div>
   </div>
 
   <script>
-    // Login check
     if (localStorage.getItem('loggedIn') !== 'true') {
       window.location.href = 'index.html';
     }
@@ -71,8 +122,31 @@
     }
 
     function openEditor() {
-      window.location.href = 'editor.html'; // Editor file peru
+      document.getElementById('dashboardPage').style.display = 'none';
+      document.getElementById('editorPage').style.display = 'block';
+      runCode();
     }
+
+    function goBack() {
+      document.getElementById('editorPage').style.display = 'none';
+      document.getElementById('dashboardPage').style.display = 'flex';
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.editor').forEach(e => e.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(tab + '-editor').classList.add('active');
+    }
+
+    function runCode() {
+      const html = document.getElementById('html').value;
+      const css = `<style>${document.getElementById('css').value}</style>`;
+      const js = `<script>${document.getElementById('js').value}<\/script>`;
+      document.getElementById('output').srcdoc = html + css + js;
+    }
+
+    window.onload = runCode;
   </script>
 </body>
 </html>
