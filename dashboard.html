@@ -6,39 +6,18 @@
   <title>Vyshnavi Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      font-family: 'Segoe UI', sans-serif;
-    }
-    /* DASHBOARD CARD */
-    .dashboard {
-      display: flex; justify-content: center; align-items: center;
-      min-height: 100vh; padding: 20px;
-    }
-    .card {
-      background: white; padding: 40px 30px; border-radius: 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      width: 100%; max-width: 350px; text-align: center;
-    }
+    body { background: linear-gradient(135deg, #667eea, #764ba2); font-family: 'Segoe UI', sans-serif; }
+    .dashboard { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .card { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); width: 100%; max-width: 350px; text-align: center; }
     h1 { font-size: 24px; margin-bottom: 10px; color: #333; }
     p { color: #666; margin-bottom: 20px; }
     .stats { font-weight: bold; margin-bottom: 30px; color: #333; }
-    button {
-      width: 100%; padding: 15px; margin: 8px 0; border: none;
-      border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;
-    }
+    button { width: 100%; padding: 15px; margin: 8px 0; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
     .logout { background: #667eea; color: white; }
     .playground { background: #4c51bf; color: white; }
-    
-    /* EDITOR - First hide cheyyi */
-    .editor-page { display: none; background: #1a1a2e; color: #fff; }
-    .header {
-      background: #0f3460; padding: 15px 20px; display: flex;
-      justify-content: space-between; align-items: center;
-      border-bottom: 2px solid #4ecdc4;
-    }
+    .editor-page { display: none; background: #1a1a2e; color: #fff; min-height: 100vh; }
+    .header { background: #0f3460; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #4ecdc4; }
     .header h1 { font-size: 20px; color: #4ecdc4; margin: 0; }
-    .header span { color: #4ecdc4; }
     .header button { width: auto; background: #ff6b6b; color: white; padding: 8px 15px; }
     .container { display: flex; height: calc(100vh - 60px); }
     .editors { width: 50%; display: flex; flex-direction: column; }
@@ -47,14 +26,13 @@
     .tab.active { background: #1a1a2e; color: #4ecdc4; border-bottom: 2px solid #4ecdc4; }
     .editor { flex: 1; display: none; }
     .editor.active { display: block; }
-    textarea {
-      width: 100%; height: 100%; background: #1a1a2e; color: #fff;
-      border: none; padding: 15px; font-family: 'Courier New'; font-size: 14px; outline: none;
-    }
+    textarea { width: 100%; height: 100%; background: #1a1a2e; color: #fff; border: none; padding: 15px; font-family: 'Courier New'; font-size: 14px; outline: none; }
     .preview { width: 50%; background: #fff; display: flex; flex-direction: column; }
-    .preview-header { background: #16213e; padding: 12px 20px; display: flex; justify-content: space-between; }
+    .preview-header { background: #16213e; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
     .preview-header span { color: #4ecdc4; font-weight: 600; }
+    .btn-group { display: flex; gap: 10px; }
     .run-btn { width: auto; background: #4ecdc4; color: #000; padding: 8px 20px; }
+    .clear-btn { width: auto; background: #ff6b6b; color: white; padding: 8px 15px; }
     iframe { flex: 1; border: none; background: white; }
     @media(max-width: 768px) {
       .container { flex-direction: column; }
@@ -89,22 +67,22 @@
           <button class="tab" onclick="showTab('js')">JS</button>
         </div>
         <div class="editor active" id="html-editor">
-          <textarea id="html"><h1>Hello Vyshnavi 💚</h1>
-<button onclick="alert('Working')">Click Me</button></textarea>
+          <textarea id="html" oninput="saveCode()"></textarea>
         </div>
         <div class="editor" id="css-editor">
-          <textarea id="css">body { font-family: Arial; text-align: center; padding: 50px; }
-h1 { color: #4ecdc4; }
-button { padding: 15px 30px; background: #4ecdc4; border: none; border-radius: 10px; cursor: pointer; }</textarea>
+          <textarea id="css" oninput="saveCode()"></textarea>
         </div>
         <div class="editor" id="js-editor">
-          <textarea id="js">console.log('Hi Vyshnavi');</textarea>
+          <textarea id="js" oninput="saveCode()"></textarea>
         </div>
       </div>
       <div class="preview">
         <div class="preview-header">
           <span>Live Output</span>
-          <button class="run-btn" onclick="runCode()">▶ Run</button>
+          <div class="btn-group">
+            <button class="clear-btn" onclick="clearCode()">Clear</button>
+            <button class="run-btn" onclick="runCode()">▶ Run</button>
+          </div>
         </div>
         <iframe id="output"></iframe>
       </div>
@@ -112,8 +90,46 @@ button { padding: 15px 30px; background: #4ecdc4; border: none; border-radius: 1
   </div>
 
   <script>
+    // Login check
     if (localStorage.getItem('loggedIn') !== 'true') {
       window.location.href = 'index.html';
+    }
+
+    // Default code - first time ki
+    const defaultHTML = `<h1>Hello Vyshnavi 💚</h1>\n<button onclick="alert('Working')">Click Me</button>`;
+    const defaultCSS = `body { font-family: Arial; text-align: center; padding: 50px; }\nh1 { color: #4ecdc4; }\nbutton { padding: 15px 30px; background: #4ecdc4; border: none; border-radius: 10px; cursor: pointer; }`;
+    const defaultJS = `console.log('Hi Vyshnavi');`;
+
+    // Page load ayinappudu
+    window.onload = function() {
+      // Code load cheyyi - localStorage nunchi or default
+      document.getElementById('html').value = localStorage.getItem('savedHTML') || defaultHTML;
+      document.getElementById('css').value = localStorage.getItem('savedCSS') || defaultCSS;
+      document.getElementById('js').value = localStorage.getItem('savedJS') || defaultJS;
+      
+      // Last open chesina page remember cheyyi
+      if (localStorage.getItem('currentPage') === 'editor') {
+        openEditor();
+      } else {
+        goBack();
+      }
+      runCode();
+    }
+
+    function saveCode() {
+      localStorage.setItem('savedHTML', document.getElementById('html').value);
+      localStorage.setItem('savedCSS', document.getElementById('css').value);
+      localStorage.setItem('savedJS', document.getElementById('js').value);
+    }
+
+    function clearCode() {
+      if (confirm('Code antha delete cheyyala Vyshnavi?')) {
+        document.getElementById('html').value = '';
+        document.getElementById('css').value = '';
+        document.getElementById('js').value = '';
+        saveCode();
+        runCode();
+      }
     }
 
     function logout() {
@@ -124,12 +140,14 @@ button { padding: 15px 30px; background: #4ecdc4; border: none; border-radius: 1
     function openEditor() {
       document.getElementById('dashboardPage').style.display = 'none';
       document.getElementById('editorPage').style.display = 'block';
+      localStorage.setItem('currentPage', 'editor'); // Page remember cheyyi
       runCode();
     }
 
     function goBack() {
       document.getElementById('editorPage').style.display = 'none';
       document.getElementById('dashboardPage').style.display = 'flex';
+      localStorage.setItem('currentPage', 'dashboard'); // Page remember cheyyi
     }
 
     function showTab(tab) {
@@ -145,8 +163,6 @@ button { padding: 15px 30px; background: #4ecdc4; border: none; border-radius: 1
       const js = `<script>${document.getElementById('js').value}<\/script>`;
       document.getElementById('output').srcdoc = html + css + js;
     }
-
-    window.onload = runCode;
   </script>
 </body>
 </html>
