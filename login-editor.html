@@ -3,143 +3,112 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Login + VS Black Editor</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <title>Vyshnavi 💚 | Web Playground</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body {
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex; justify-content: center; align-items: center; padding: 20px;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #1a1a2e; color: #fff; }
+    .header {
+      background: #0f3460; padding: 15px 20px; display: flex;
+      justify-content: space-between; align-items: center;
+      border-bottom: 2px solid #4ecdc4;
     }
-    .login-container {
-      background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-      border-radius: 20px; padding: 40px; width: 100%; max-width: 400px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2);
+    .header h1 { font-size: 20px; color: #4ecdc4; }
+    .header span { color: #4ecdc4; }
+    .header button {
+      background: #ff6b6b; color: white; border: none;
+      padding: 8px 15px; border-radius: 8px; cursor: pointer;
     }
-    .login-container h2 { color: white; text-align: center; margin-bottom: 30px; font-size: 28px; }
-    .input-group { margin-bottom: 20px; }
-    .input-group input {
-      width: 100%; padding: 15px; background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 10px; color: white; font-size: 16px; outline: none;
+    .container { display: flex; height: calc(100vh - 60px); }
+    .editors { width: 50%; display: flex; flex-direction: column; }
+    .tabs { display: flex; background: #16213e; }
+    .tab {
+      padding: 12px 20px; cursor: pointer; border: none;
+      background: #16213e; color: #aaa; font-weight: 600;
     }
-    .input-group input::placeholder { color: rgba(255, 255, 255, 0.7); }
-    .login-btn {
-      width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2);
-      border: none; border-radius: 10px; color: white; font-size: 18px; font-weight: bold; cursor: pointer;
+    .tab.active { background: #1a1a2e; color: #4ecdc4; border-bottom: 2px solid #4ecdc4; }
+    .editor { flex: 1; display: none; }
+    .editor.active { display: block; }
+    textarea {
+      width: 100%; height: 100%; background: #1a1a2e; color: #fff;
+      border: none; padding: 15px; font-family: 'Courier New';
+      font-size: 14px; resize: none; outline: none;
     }
-    .login-btn:hover { opacity: 0.9; }
-    .error-msg { color: #ff6b6b; text-align: center; margin-top: 15px; display: none; }
-    
-    .editor-container {
-      display: none; width: 100%; max-width: 1400px; height: 90vh;
-      background: #1e1e1e; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    .preview { width: 50%; background: #fff; display: flex; flex-direction: column; }
+    .preview-header {
+      background: #16213e; padding: 12px 20px; display: flex;
+      justify-content: space-between; align-items: center;
     }
-    .editor-header {
-      background: #2d2d30; padding: 15px 20px; display: flex; justify-content: space-between;
-      align-items: center; border-bottom: 1px solid #3e3e42;
+    .preview-header span { color: #4ecdc4; font-weight: 600; }
+    .run-btn {
+      background: #4ecdc4; color: #000; border: none;
+      padding: 8px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;
     }
-    .editor-header h3 { color: #cccccc; font-size: 16px; }
-    .logout-btn { padding: 8px 20px; background: #e74c3c; border: none; border-radius: 5px; color: white; cursor: pointer; }
-    .editor-body { display: flex; height: calc(100% - 60px); min-height: 500px; }
-    .code-area { flex: 1; display: flex; flex-direction: column; border-right: 1px solid #3e3e42; }
-    .code-area textarea {
-      flex: 1; background: #1e1e1e; color: #d4d4d4; border: none; padding: 20px;
-      font-family: 'Consolas', monospace; font-size: 15px; resize: none; outline: none;
-    }
-    .output-area { flex: 1; display: flex; flex-direction: column; background: #1e1e1e; }
-    .output-header { background: #252526; padding: 10px 20px; color: #cccccc; border-bottom: 1px solid #3e3e42; font-size: 14px; }
-    #output { flex: 1; padding: 20px; color: #00ff00; font-family: 'Consolas', monospace; font-size: 14px; overflow-y: auto; white-space: pre-wrap; }
-    .run-btn { padding: 12px 30px; background: #0e639c; border: none; color: white; cursor: pointer; font-size: 16px; font-weight: bold; margin: 10px; border-radius: 5px; }
-    .run-btn:hover { background: #1177bb; }
-    @media (max-width: 768px) {
-      .editor-body { flex-direction: column; min-height: 600px; }
-      .code-area { border-right: none; border-bottom: 1px solid #3e3e42; min-height: 300px; }
-      .output-area { min-height: 300px; }
+    iframe { flex: 1; border: none; background: white; }
+    @media(max-width: 768px) {
+      .container { flex-direction: column; }
+      .editors { width: 100%; height: 60vh; }
+      .preview { width: 100%; height: 40vh; }
     }
   </style>
 </head>
 <body>
-  <div class="login-container" id="loginPage">
-    <h2><i class="fas fa-graduation-cap"></i> Student Login</h2>
-    <div class="input-group">
-      <input type="email" id="email" placeholder="Email: vyshnavi@gmail.com">
-    </div>
-    <div class="input-group">
-      <input type="password" id="password" placeholder="Password: 123456">
-    </div>
-    <button class="login-btn" onclick="login()">Login</button>
-    <div class="error-msg" id="errorMsg">Invalid email or password!</div>
+  <div class="header">
+    <h1>Vyshnavi 💚 | <span>Web Playground</span></h1>
+    <button onclick="goBack()">← Dashboard</button>
   </div>
 
-  <div class="editor-container" id="editorPage">
-    <div class="editor-header">
-      <h3><i class="fas fa-code"></i> VS Black Editor - Welcome Vyshnavi 💚</h3>
-      <div><button onclick="logout()" class="logout-btn">Logout</button></div>
+  <div class="container">
+    <div class="editors">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('html')">HTML</button>
+        <button class="tab" onclick="showTab('css')">CSS</button>
+        <button class="tab" onclick="showTab('js')">JS</button>
+      </div>
+      <div class="editor active" id="html-editor">
+        <textarea id="html" placeholder="HTML ikkada raasuko..."><h1>Hello Vyshnavi 💚</h1></textarea>
+      </div>
+      <div class="editor" id="css-editor">
+        <textarea id="css" placeholder="CSS ikkada raasuko...">h1 { color: #4ecdc4; text-align: center; }</textarea>
+      </div>
+      <div class="editor" id="js-editor">
+        <textarea id="js" placeholder="JavaScript ikkada raasuko...">console.log('Hi Vyshnavi');</textarea>
+      </div>
     </div>
-    <div class="editor-body">
-      <div class="code-area">
-        <textarea id="codeInput">console.log('Hello Vyshnavi 💚');
 
-let a = 10;
-let b = 20;
-console.log('Sum = ' + (a + b));
-
-for(let i=1; i<=5; i++) {
-  console.log('Number: ' + i);
-}</textarea>
-        <button class="run-btn" onclick="runCode()"><i class="fas fa-play"></i> Run Code</button>
+    <div class="preview">
+      <div class="preview-header">
+        <span>Live Output</span>
+        <button class="run-btn" onclick="runCode()">▶ Run</button>
       </div>
-      <div class="output-area">
-        <div class="output-header">OUTPUT</div>
-        <div id="output">Click Run Code to see output...</div>
-      </div>
+      <iframe id="output"></iframe>
     </div>
   </div>
 
   <script>
-    function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const errorMsg = document.getElementById('errorMsg');
-      
-      if(email === 'vyshnavi@gmail.com' && password === '123456') {
-        document.getElementById('loginPage').style.display = 'none';
-        document.getElementById('editorPage').style.display = 'block';
-        errorMsg.style.display = 'none';
-      } else {
-        errorMsg.style.display = 'block';
-      }
+    if (localStorage.getItem('loggedIn') !== 'true') {
+      window.location.href = 'index.html';
     }
 
-    function logout() {
-      document.getElementById('loginPage').style.display = 'block';
-      document.getElementById('editorPage').style.display = 'none';
-      document.getElementById('email').value = '';
-      document.getElementById('password').value = '';
+    function showTab(tab) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.editor').forEach(e => e.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(tab + '-editor').classList.add('active');
     }
 
     function runCode() {
-      const code = document.getElementById('codeInput').value;
+      const html = document.getElementById('html').value;
+      const css = `<style>${document.getElementById('css').value}</style>`;
+      const js = `<script>${document.getElementById('js').value}<\/script>`;
       const output = document.getElementById('output');
-      output.innerHTML = '';
-      
-      const originalLog = console.log;
-      console.log = function(...args) {
-        output.innerHTML += args.join(' ') + '\n';
-        originalLog.apply(console, args);
-      };
-      
-      try {
-        eval(code);
-      } catch (error) {
-        output.innerHTML = 'Error: ' + error.message;
-        output.style.color = '#ff6b6b';
-      }
-      
-      console.log = originalLog;
-      output.style.color = '#00ff00';
+      output.srcdoc = html + css + js;
     }
+
+    function goBack() {
+      window.location.href = 'dashboard.html';
+    }
+
+    window.onload = runCode;
   </script>
 </body>
-          </html>
+</html>
