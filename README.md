@@ -1,2 +1,2 @@
-# Student Attendance Tracker 
+# student attendance tracker 
 My first website
