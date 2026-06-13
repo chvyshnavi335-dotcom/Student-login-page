@@ -1,341 +1,192 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Attendance Tracker</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>SDMSMK - Attendance</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; background: #EFF6FF; padding: 10px; }
-       .container { max-width: 650px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); overflow: hidden; }
-       .header { background: #1E40AF; color: white; padding: 20px; text-align: center; position: relative; }
-       .school-name { font-size: 22px; font-weight: 700; }
-       .class-name { font-size: 14px; opacity: 0.9; margin-top: 5px; }
-       .logout { position: absolute; right: 15px; top: 15px; background: #1E3A8A; border: none; color: white; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
-       .tabs { display: flex; background: #DBEAFE; }
-       .tab { flex: 1; padding: 12px; border: none; background: #DBEAFE; font-weight: 600; cursor: pointer; }
-       .tab.active { background: white; color: #1E40AF; border-bottom: 3px solid #1E40AF; }
-       .page { display: none; padding: 15px; }
-       .page.active { display: block; }
-       .date-box { text-align: center; font-weight: 600; color: #1E40AF; margin-bottom: 15px; }
-       .add-student { background: #F0F9FF; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
-       .add-student input { width: 100%; padding: 10px; margin: 5px 0; border: 2px solid #BFDBFE; border-radius: 8px; }
-       .add-student button { width: 100%; padding: 12px; background: #1E40AF; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 5px; }
-       .stats { display: flex; justify-content: space-around; background: #DBEAFE; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-weight: 600; }
-       .student { display: flex; justify-content: space-between; align-items: center; padding: 12px; margin: 8px 0; background: #FAFAFA; border-radius: 10px; border-left: 4px solid #1E40AF; }
-       .student-info { display: flex; align-items: center; gap: 10px; }
-       .student-photo { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: #ddd; }
-       .roll-no { background: #1E40AF; color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 700; }
-       .student-name { font-weight: 600; margin-top: 2px; }
-       .status { font-size: 12px; color: #666; }
-       .btns button { padding: 6px 10px; border: none; border-radius: 6px; margin-left: 4px; font-weight: 600; cursor: pointer; font-size: 12px; }
-       .present { background: #16A34A; color: white; }
-       .absent { background: #DC2626; color: white; }
-       .photo { background: #0891B2; color: white; }
-       .delete { background: #64748B; color: white; }
-       .export-btn { width: 100%; margin-top: 15px; padding: 12px; background: #1E40AF; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
-        #loginScreen { max-width: 350px; margin: 50px auto; padding: 30px; background: white; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        #loginScreen input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #ddd; border-radius: 8px; }
-        #loginScreen button { width: 100%; padding: 12px; background: #1E40AF; color: white; border: none; border-radius: 8px; font-weight: 600; }
-        #cameraModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; }
-        #video { width: 100%; max-width: 400px; margin: 50px auto; display: block; }
-       .camera-btns { text-align: center; margin-top: 20px; }
-       .camera-btns button { padding: 12px 20px; margin: 5px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
-       .capture { background: #16A34A; color: white; }
-       .close { background: #DC2626; color: white; }
-       .settings-input { width: 100%; padding: 10px; margin: 5px 0 15px; border: 2px solid #BFDBFE; border-radius: 8px; }
-       .search-box { width: 100%; padding: 10px; margin-bottom: 10px; border: 2px solid #BFDBFE; border-radius: 8px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f2f5; }
+      .header { background: #1a4d8f; color: white; padding: 15px; text-align: center; position: relative; }
+      .header h1 { font-size: 24px; }
+      .header span { font-size: 14px; }
+      .logout { position: absolute; right: 15px; top: 15px; background: #5b7fc4; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+      .tabs { display: flex; background: white; border-bottom: 2px solid #ddd; }
+      .tab { flex: 1; padding: 12px; text-align: center; cursor: pointer; border: none; background: white; }
+      .tab.active { background: #e8f0fe; border-bottom: 3px solid #1a4d8f; font-weight: bold; }
+      .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+      .date { text-align: center; color: #1a4d8f; margin: 10px 0; font-size: 16px; }
+      .add-form { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      .add-form input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+      .add-btn { width: 100%; background: #1a4d8f; color: white; padding: 12px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 5px; }
+      .add-btn:hover { background: #153d70; }
+      .search { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+      .stats { display: flex; justify-content: space-around; background: white; padding: 12px; border-radius: 8px; margin: 10px 0; }
+      .stats div { font-weight: bold; }
+      .student-card { background: white; padding: 12px; margin: 10px 0; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-left: 4px solid #1a4d8f; }
+      .student-info { flex: 1; }
+      .roll-badge { background: #1a4d8f; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; display: inline-block; margin-bottom: 5px; }
+      .student-name { font-size: 16px; font-weight: bold; margin: 3px 0; }
+      .student-status { font-size: 13px; color: #666; }
+      .parent-num { font-size: 12px; color: #888; }
+      .actions { display: flex; gap: 8px; }
+      .btn { width: 40px; height: 40px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; }
+      .btn-p { background: #28a745; color: white; }
+      .btn-a { background: #dc3545; color: white; }
+      .btn-x { background: #6c757d; color: white; }
+      .btn:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-    <div id="loginScreen">
-        <h2>🎓 Teacher Login</h2>
-        <p style="color:#666; margin:10px 0 20px;">Student Attendance System</p>
-        <input type="password" id="adminPass" placeholder="Teacher Password">
-        <button onclick="checkLogin()">Login</button>
-        <p style="font-size:12px; color:#999; margin-top:15px;">Default: teacher123</p>
+    <div class="header">
+        <h1>SDMSMK</h1>
+        <span>302</span>
+        <button class="logout">Logout</button>
     </div>
 
-    <div class="container" id="mainApp" style="display:none;">
-        <div class="header">
-            <div class="school-name" id="schoolTitle">Smart School</div>
-            <div class="class-name" id="classTitle">Class 10-A</div>
-            <button class="logout" onclick="logout()">Logout</button>
-        </div>
-
-        <div class="tabs">
-            <button class="tab active" onclick="showPage('daily', event)">Attendance</button>
-            <button class="tab" onclick="showPage('report', event)">Reports</button>
-            <button class="tab" onclick="showPage('settings', event)">Settings</button>
-        </div>
-
-        <div class="page active" id="dailyPage">
-            <div class="date-box" id="todayDate"></div>
-
-            <div class="add-student">
-                <input type="text" id="rollNo" placeholder="Roll No">
-                <input type="text" id="studentName" placeholder="Student Full Name">
-                <button onclick="addStudent()">+ Add Student</button>
-            </div>
-
-            <input type="text" class="search-box" id="searchBox" placeholder="🔍 Search Student..." oninput="renderList()">
-
-            <div class="stats">
-                <span>Present: <span id="presentCount">0</span></span>
-                <span>Absent: <span id="absentCount">0</span></span>
-                <span>Total: <span id="totalCount">0</span></span>
-            </div>
-            <div id="studentList"></div>
-            <button class="export-btn" onclick="exportTodayCSV()">📥 Download Today's Attendance</button>
-        </div>
-
-        <div class="page" id="reportPage">
-            <h3 style="text-align:center; color:#1E40AF; margin-bottom:15px;">Monthly Attendance %</h3>
-            <canvas id="monthlyChart"></canvas>
-            <button class="export-btn" onclick="exportMonthCSV()">📥 Download Month Report</button>
-        </div>
-
-        <div class="page" id="settingsPage">
-            <h3 style="text-align:center; color:#1E40AF; margin-bottom:15px;">Settings</h3>
-            <label style="font-weight:600;">School Name:</label>
-            <input type="text" class="settings-input" id="schoolNameInput" placeholder="Your School Name">
-            <label style="font-weight:600;">Class/Section:</label>
-            <input type="text" class="settings-input" id="classNameInput" placeholder="Ex: Class 10-A">
-            <label style="font-weight:600;">Change Password:</label>
-            <input type="password" class="settings-input" id="newPassInput" placeholder="New Password">
-            <button class="export-btn" onclick="saveSettings()">💾 Save Settings</button>
-        </div>
+    <div class="tabs">
+        <button class="tab active">Attendance</button>
+        <button class="tab">Reports</button>
+        <button class="tab">Settings</button>
     </div>
 
-    <div id="cameraModal">
-        <video id="video" autoplay></video>
-        <div class="camera-btns">
-            <button class="capture" onclick="capturePhoto()">📸 Capture</button>
-            <button class="close" onclick="closeCamera()">Close</button>
+    <div class="container">
+        <div class="date">Date: <span id="today"></span></div>
+
+        <div class="add-form">
+            <input type="text" id="rollNo" placeholder="Roll No">
+            <input type="text" id="studentName" placeholder="Student Full Name">
+            <input type="tel" id="parentNumber" placeholder="Parent WhatsApp: 919490475335">
+            <button class="add-btn" onclick="addStudent()">+ Add Student</button>
         </div>
+
+        <input type="text" class="search" id="searchBox" placeholder="🔍 Search Student..." onkeyup="searchStudent()">
+
+        <div class="stats">
+            <div>Present: <span id="presentCount">0</span></div>
+            <div>Absent: <span id="absentCount">0</span></div>
+            <div>Total: <span id="totalCount">0</span></div>
+        </div>
+
+        <div id="studentList"></div>
     </div>
 
     <script>
-        let ADMIN_PASS = localStorage.getItem('adminPass') || "teacher123";
-        let SCHOOL_NAME = localStorage.getItem('schoolName') || "Smart School";
-        let CLASS_NAME = localStorage.getItem('className') || "Class 10-A";
-        let today = new Date().toISOString().split('T')[0];
-        let currentPhotoStudent = null;
-        let stream = null;
-        let chartInstance = null;
-
-        document.getElementById('schoolTitle').innerText = SCHOOL_NAME;
-        document.getElementById('classTitle').innerText = CLASS_NAME;
-        document.getElementById('schoolNameInput').value = SCHOOL_NAME;
-        document.getElementById('classNameInput').value = CLASS_NAME;
-        document.getElementById('todayDate').innerText = "Date: " + today;
-
         let students = JSON.parse(localStorage.getItem('students')) || [];
-        let attendance = JSON.parse(localStorage.getItem('attendance_' + today)) || {};
-        let photos = JSON.parse(localStorage.getItem('photos_' + today)) || {};
-
-        function checkLogin() {
-            if (document.getElementById('adminPass').value === ADMIN_PASS) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                renderList();
-            } else {
-                alert('Wrong Password!');
-            }
-        }
-
-        function logout() {
-            document.getElementById('mainApp').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'block';
-            document.getElementById('adminPass').value = '';
-        }
-
-        function showPage(page, e) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            e.target.classList.add('active');
-            document.getElementById(page + 'Page').classList.add('active');
-            if (page === 'report') loadMonthlyChart();
-        }
-
-        function saveSettings() {
-            SCHOOL_NAME = document.getElementById('schoolNameInput').value || "Smart School";
-            CLASS_NAME = document.getElementById('classNameInput').value || "Class 10-A";
-            let newPass = document.getElementById('newPassInput').value;
-            if (newPass) ADMIN_PASS = newPass;
-
-            localStorage.setItem('schoolName', SCHOOL_NAME);
-            localStorage.setItem('className', CLASS_NAME);
-            localStorage.setItem('adminPass', ADMIN_PASS);
-            document.getElementById('schoolTitle').innerText = SCHOOL_NAME;
-            document.getElementById('classTitle').innerText = CLASS_NAME;
-            document.getElementById('newPassInput').value = '';
-            alert('Settings Saved!');
-        }
-
-        function saveData() {
-            localStorage.setItem('students', JSON.stringify(students));
-            localStorage.setItem('attendance_' + today, JSON.stringify(attendance));
-            localStorage.setItem('photos_' + today, JSON.stringify(photos));
-            renderList();
-        }
-
+        
+        document.getElementById('today').textContent = new Date().toISOString().split('T')[0];
+        
         function addStudent() {
             let roll = document.getElementById('rollNo').value.trim();
             let name = document.getElementById('studentName').value.trim();
-            if (roll && name &&!students.find(s => s.roll === roll)) {
-                students.push({roll: roll, name: name});
-                document.getElementById('rollNo').value = '';
-                document.getElementById('studentName').value = '';
-                saveData();
+            let parentNum = document.getElementById('parentNumber').value.trim();
+            
+            if(!roll ||!name ||!parentNum) {
+                alert("Roll, Name, Parent Number anni fill chey");
+                return;
             }
+            
+            // 91 tho start ayyi 12 digits undali: 919490475335
+            if(parentNum.length!== 12 ||!parentNum.startsWith('91')) {
+                alert("Parent number 91 tho start ayyi 12 digits undali\nEx: 919490475335\n+ vaddu, 0 vaddu");
+                return;
+            }
+            
+            if(students.find(s => s.roll === roll)) {
+                alert("Ee Roll number already undi");
+                return;
+            }
+            
+            students.push({
+                roll: roll, 
+                name: name, 
+                parent: parentNum,
+                status: 'Present'
+            });
+            
+            saveData();
+            renderStudents();
+            
+            document.getElementById('rollNo').value = '';
+            document.getElementById('studentName').value = '';
+            document.getElementById('parentNumber').value = '';
         }
-
+        
+        function markPresent(roll) {
+            let student = students.find(s => s.roll === roll);
+            student.status = 'Present';
+            saveData();
+            renderStudents();
+        }
+        
+        function markAbsent(roll) {
+            let student = students.find(s => s.roll === roll);
+            student.status = 'Absent';
+            saveData();
+            renderStudents();
+            
+            // WhatsApp message open chey
+            let date = new Date().toLocaleDateString('en-IN');
+            let message = `SDMSMK School: Mee pillalu ${student.name} (${student.roll}) ee roju ${date} na school ki raaledu. Gamaninchagalaru.`;
+            
+            // WhatsApp link - mobile lo WhatsApp app open avthundi
+            let whatsappURL = `https://wa.me/${student.parent}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
+        }
+        
         function deleteStudent(roll) {
-            if (confirm('Delete Roll No ' + roll + '?')) {
+            if(confirm('Ee student ni delete cheyala?')) {
                 students = students.filter(s => s.roll!== roll);
-                delete attendance[roll];
-                delete photos[roll];
                 saveData();
+                renderStudents();
             }
         }
-
-        function markAttendance(roll, status) {
-            attendance[roll] = status;
-            if (status!== 'Present') delete photos[roll];
-            saveData();
-        }
-
-        async function openCamera(roll) {
-            currentPhotoStudent = roll;
-            document.getElementById('cameraModal').style.display = 'block';
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                document.getElementById('video').srcObject = stream;
-            } catch (err) {
-                alert('Camera access denied!');
-            }
-        }
-
-        function closeCamera() {
-            if (stream) stream.getTracks().forEach(track => track.stop());
-            document.getElementById('cameraModal').style.display = 'none';
-        }
-
-        function capturePhoto() {
-            let video = document.getElementById('video');
-            let canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-            photos[currentPhotoStudent] = canvas.toDataURL('image/jpeg', 0.5);
-            attendance[currentPhotoStudent] = 'Present';
-            closeCamera();
-            saveData();
-        }
-
-        function renderList() {
+        
+        function renderStudents() {
             let list = document.getElementById('studentList');
             let search = document.getElementById('searchBox').value.toLowerCase();
-            list.innerHTML = '';
-            let present = 0, absent = 0;
-
-            let filtered = students.filter(s =>
-                s.name.toLowerCase().includes(search) || s.roll.includes(search)
+            
+            let filtered = students.filter(s => 
+                s.name.toLowerCase().includes(search) || 
+                s.roll.toLowerCase().includes(search)
             );
-
-            filtered.forEach(student => {
-                let status = attendance[student.roll];
-                let photoSrc = photos[student.roll] || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNDUiIHZpZXdCb3g9IjAgMCA0NSA0NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIyMi41IiBjeT0iMjIuNSIgcj0iMjIuNSIgZmlsbD0iI0RERERCIvPjxwYXRoIGQ9Ik0yMi41IDIyLjVDMjUuODAzMiAyMi41IDI4LjUgMTkuODAzMiAyOC41IDE2LjVDMjguNSAxMy4xOTY4IDI1LjgwMzIgMTAuNSAyMi41IDEwLjVDMTkuMTk2OCAxMC41IDE2LjUgMTMuMTk2OCAxNi41IDE2LjVDMTYuNSAxOS44MDMyIDE5LjE5NjggMjIuNSAyMi41IDIyLjVaTTEwLjUgMzEuNUMxMC41IDI2LjUzMTQgMTQuNTMxNCAyMi41IDE5LjUgMjIuNUgyNS41QzMwLjQ2ODYgMjIuNSAzNC41IDI2LjUzMTQgMzQuNSAzMS41VjM0LjVIMTAuNVYzMS41WiIgZmlsbD0iIzk5OTk5OSIvPjwvc3ZnPg==';
-                if (status === 'Present') present++;
-                if (status === 'Absent') absent++;
-
-                list.innerHTML += `
-                    <div class="student">
-                        <div class="student-info">
-                            <img src="${photoSrc}" class="student-photo">
-                            <div>
-                                <span class="roll-no">Roll ${student.roll}</span>
-                                <div class="student-name">${student.name}</div>
-                                <div class="status">${status || 'Not Marked'}</div>
-                            </div>
-                        </div>
-                        <div class="btns">
-                            <button class="photo" onclick="openCamera('${student.roll}')">📸</button>
-                            <button class="present" onclick="markAttendance('${student.roll}', 'Present')">P</button>
-                            <button class="absent" onclick="markAttendance('${student.roll}', 'Absent')">A</button>
-                            <button class="delete" onclick="deleteStudent('${student.roll}')">✕</button>
-                        </div>
+            
+            list.innerHTML = filtered.map(s => `
+                <div class="student-card">
+                    <div class="student-info">
+                        <div class="roll-badge">Roll ${s.roll}</div>
+                        <div class="student-name">${s.name}</div>
+                        <div class="student-status">${s.status}</div>
+                        <div class="parent-num">📱 +${s.parent}</div>
                     </div>
-                `;
-            });
-
-            document.getElementById('presentCount').innerText = present;
-            document.getElementById('absentCount').innerText = absent;
-            document.getElementById('totalCount').innerText = students.length;
+                    <div class="actions">
+                        <button class="btn btn-p" onclick="markPresent('${s.roll}')">P</button>
+                        <button class="btn btn-a" onclick="markAbsent('${s.roll}')">A</button>
+                        <button class="btn btn-x" onclick="deleteStudent('${s.roll}')">×</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateStats();
         }
-
-        function exportTodayCSV() {
-            let csv = 'Roll No,Student Name,Status,Date,Photo\n';
-            students.forEach(s => {
-                csv += `${s.roll},${s.name},${attendance[s.roll] || 'Not Marked'},${today},${photos[s.roll]? 'Yes' : 'No'}\n`;
-            });
-            downloadCSV(csv, `${SCHOOL_NAME}_${CLASS_NAME}_${today}.csv`);
+        
+        function updateStats() {
+            let present = students.filter(s => s.status === 'Present').length;
+            let absent = students.filter(s => s.status === 'Absent').length;
+            document.getElementById('presentCount').textContent = present;
+            document.getElementById('absentCount').textContent = absent;
+            document.getElementById('totalCount').textContent = students.length;
         }
-
-        function exportMonthCSV() {
-            let csv = 'Date,Roll No,Student Name,Status\n';
-            let currentMonth = today.substring(0, 7);
-            for (let i = 1; i <= 31; i++) {
-                let date = currentMonth + '-' + String(i).padStart(2, '0');
-                let dayAtt = JSON.parse(localStorage.getItem('attendance_' + date)) || {};
-                students.forEach(s => {
-                    if (dayAtt[s.roll]) csv += `${date},${s.roll},${s.name},${dayAtt[s.roll]}\n`;
-                });
-            }
-            downloadCSV(csv, `${SCHOOL_NAME}_Month_${currentMonth}.csv`);
+        
+        function searchStudent() {
+            renderStudents();
         }
-
-        function downloadCSV(csv, filename) {
-            let blob = new Blob([csv], { type: 'text/csv' });
-            let url = window.URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.click();
+        
+        function saveData() {
+            localStorage.setItem('students', JSON.stringify(students));
         }
-
-        function loadMonthlyChart() {
-            let counts = {};
-            students.forEach(s => counts[s.roll] = 0);
-            let currentMonth = today.substring(0, 7);
-
-            for (let i = 1; i <= 31; i++) {
-                let date = currentMonth + '-' + String(i).padStart(2, '0');
-                let dayAtt = JSON.parse(localStorage.getItem('attendance_' + date)) || {};
-                Object.keys(dayAtt).forEach(roll => {
-                    if (dayAtt[roll] === 'Present' && counts[roll]!== undefined) counts[roll]++;
-                });
-            }
-
-            if (chartInstance) chartInstance.destroy();
-            let ctx = document.getElementById('monthlyChart').getContext('2d');
-            chartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: students.map(s => s.roll + '-' + s.name.split(' ')[0]),
-                    datasets: [{
-                        label: 'Present Days',
-                        data: students.map(s => counts[s.roll]),
-                        backgroundColor: '#1E40AF'
-                    }]
-                },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            });
-        }
-
-        renderList();
+        
+        renderStudents();
     </script>
 </body>
-  </html>
+    </html>
