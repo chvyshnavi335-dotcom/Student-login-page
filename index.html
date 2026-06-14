@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDMSMK - Attendance Pro v5.0</title>
+    <title>SDMSMK - Attendance Pro v6.0</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-
-        :root {
-            --primary: #667eea;
-            --secondary: #764ba2;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
+        :root { --primary: #667eea; --secondary: #764ba2; --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         body[data-theme="purple"] { --primary: #667eea; --secondary: #764ba2; --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         body[data-theme="green"] { --primary: #11998e; --secondary: #38ef7d; --gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
         body[data-theme="orange"] { --primary: #f12711; --secondary: #f5af19; --gradient: linear-gradient(135deg, #f12711 0%, #f5af19 100%); }
@@ -25,86 +19,76 @@
         body[data-theme="lime"] { --primary: #CDDC39; --secondary: #DCE775; --gradient: linear-gradient(135deg, #CDDC39 0%, #DCE775 100%); }
         body[data-theme="amber"] { --primary: #FFC107; --secondary: #FFD54F; --gradient: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%); }
         body[data-theme="rose"] { --primary: #E91E63; --secondary: #F06292; --gradient: linear-gradient(135deg, #E91E63 0%, #F06292 100%); }
-
         body { background: var(--gradient); min-height: 100vh; transition: all 0.3s; }
-
-.login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-.login-box { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 100%; max-width: 400px; }
-.login-box h2 { text-align: center; color: var(--primary); margin-bottom: 10px; font-size: 28px; }
-.login-box p { text-align: center; color: #888; margin-bottom: 30px; }
-.login-box input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #e0e0; border-radius: 10px; font-size: 15px; }
-.login-box input:focus { outline: none; border-color: var(--primary); }
-.login-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-.login-btn:hover { opacity: 0.9; }
-.login-note { text-align: center; margin-top: 15px; font-size: 13px; color: #888; }
-
-.app-container { display: none; }
-.header { background: var(--gradient); color: white; padding: 20px; text-align: center; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-.header h1 { font-size: 26px; font-weight: 600; }
-.header span { font-size: 14px; opacity: 0.9; }
-.header-btns { position: absolute; right: 15px; top: 15px; display: flex; gap: 8px; }
-.theme-btn,.logout { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; }
-.theme-btn:hover,.logout:hover { background: rgba(255,255,255,0.3); }
-.tabs { display: flex; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; }
-.tab { flex: 1; padding: 14px; text-align: center; cursor: pointer; border: none; background: white; font-weight: 500; color: #666; white-space: nowrap; min-width: 100px; }
-.tab.active { background: #f8f9ff; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: bold; }
-.container { padding: 20px 15px; max-width: 700px; margin: 0 auto; }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-.date { text-align: center; color: white; margin: 15px 0; font-size: 16px; font-weight: 500; }
-.add-form { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-.add-form h3 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
-.add-form input,.add-form textarea { width: 100%; padding: 13px; margin: 8px 0; border: 2px solid #e8e8; border-radius: 10px; font-size: 14px; font-family: inherit; }
-.add-form input:focus,.add-form textarea:focus { outline: none; border-color: var(--primary); }
-.add-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-.add-btn:hover { opacity: 0.9; }
-.search { width: 100%; padding: 13px; margin: 15px 0; border: 2px solid white; border-radius: 10px; background: white; font-size: 14px; }
-.stats { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-.stats div { text-align: center; }
-.stats.label { font-size: 12px; color: #888; margin-bottom: 5px; }
-.stats.value { font-size: 24px; font-weight: bold; color: var(--primary); }
-.student-card { background: white; padding: 15px; margin: 12px 0; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 5px solid var(--primary); transition: transform 0.2s; cursor: pointer; }
-.student-card:hover { transform: translateY(-2px); }
-.student-info { flex: 1; }
-.student-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; margin-right: 15px; }
-.roll-badge { background: var(--gradient); color: white; padding: 4px 10px; border-radius: 15px; font-size: 12px; display: inline-block; margin-bottom: 8px; font-weight: 600; }
-.student-name { font-size: 17px; font-weight: 600; margin: 5px 0; color: #333; }
-.student-status { font-size: 13px; color: #666; margin: 3px 0; }
-.parent-num { font-size: 11px; color: #888; margin: 2px 0; }
-.actions { display: flex; gap: 8px; }
-.btn { width: 45px; height: 45px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; transition: transform 0.2s; }
-.btn:hover { transform: scale(1.1); }
-.btn-p { background: #10b981; color: white; }
-.btn-a { background: #ef4444; color: white; }
-.btn-x { background: #6b7280; color: white; }
-
-.card { background: white; padding: 20px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-.card h3 { color: var(--primary); margin-bottom: 15px; }
-.report-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-.report-item:last-child { border-bottom: none; }
-.download-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
-.modal-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
-.modal-box h3 { color: var(--primary); margin-bottom: 20px; text-align: center; }
-.close-modal { width: 100%; margin-top: 15px; padding: 12px; background: #6b7280; color: white; border: none; border-radius: 10px; cursor: pointer; }
-
-.theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-.theme-option { padding: 20px; border-radius: 15px; cursor: pointer; text-align: center; color: white; font-weight: bold; border: 3px solid transparent; font-size: 12px; }
-.theme-option:hover { border-color: #333; }
-
-.attendance-history { max-height: 300px; overflow-y: auto; }
-.history-item { display: flex; justify-content: space-between; padding: 10px; margin: 5px 0; border-radius: 8px; background: #f8f9fa; }
-.history-present { border-left: 4px solid #10b981; }
-.history-absent { border-left: 4px solid #ef4444; }
-
-.profile-img { width: 100px; height: 100px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold; margin: 0 auto 20px; }
-.profile-detail { margin: 15px 0; }
-.profile-detail label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; }
-.profile-detail div { font-size: 16px; color: #333; font-weight: 500; }
-
-.settings-input { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #e8e8; border-radius: 10px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+       .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+       .login-box { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 100%; max-width: 400px; }
+       .login-box h2 { text-align: center; color: var(--primary); margin-bottom: 10px; font-size: 28px; }
+       .login-box p { text-align: center; color: #888; margin-bottom: 30px; }
+       .login-box input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; }
+       .login-box input:focus { outline: none; border-color: var(--primary); }
+       .login-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+       .login-note { text-align: center; margin-top: 15px; font-size: 13px; color: #888; }
+       .app-container { display: none; }
+       .header { background: var(--gradient); color: white; padding: 20px; text-align: center; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+       .header h1 { font-size: 26px; font-weight: 600; }
+       .header span { font-size: 14px; opacity: 0.9; }
+       .header-btns { position: absolute; right: 15px; top: 15px; display: flex; gap: 8px; }
+       .theme-btn,.logout { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; }
+       .tabs { display: flex; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; }
+       .tab { flex: 1; padding: 14px; text-align: center; cursor: pointer; border: none; background: white; font-weight: 500; color: #666; white-space: nowrap; min-width: 100px; }
+       .tab.active { background: #f8f9ff; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: bold; }
+       .container { padding: 20px 15px; max-width: 700px; margin: 0 auto; }
+       .tab-content { display: none; }
+       .tab-content.active { display: block; }
+       .date { text-align: center; color: white; margin: 15px 0; font-size: 16px; font-weight: 500; }
+       .add-form { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+       .add-form h3 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
+       .add-form input,.add-form textarea { width: 100%; padding: 13px; margin: 8px 0; border: 2px solid #e8e8e8; border-radius: 10px; font-size: 14px; font-family: inherit; }
+       .add-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+       .search { width: 100%; padding: 13px; margin: 15px 0; border: 2px solid white; border-radius: 10px; background: white; font-size: 14px; }
+       .stats { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+       .stats div { text-align: center; }
+       .stats.label { font-size: 12px; color: #888; margin-bottom: 5px; }
+       .stats.value { font-size: 24px; font-weight: bold; color: var(--primary); }
+       .student-card { background: white; padding: 15px; margin: 12px 0; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 5px solid var(--primary); cursor: pointer; }
+       .student-info { flex: 1; }
+       .student-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; margin-right: 15px; overflow: hidden; }
+       .student-avatar img { width: 100%; height: 100%; object-fit: cover; }
+       .roll-badge { background: var(--gradient); color: white; padding: 4px 10px; border-radius: 15px; font-size: 12px; display: inline-block; margin-bottom: 8px; font-weight: 600; }
+       .student-name { font-size: 17px; font-weight: 600; margin: 5px 0; color: #333; }
+       .student-status { font-size: 13px; color: #666; margin: 3px 0; }
+       .parent-num { font-size: 11px; color: #888; margin: 2px 0; }
+       .actions { display: flex; gap: 8px; }
+       .btn { width: 45px; height: 45px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; }
+       .btn-p { background: #10b981; color: white; }
+       .btn-a { background: #ef4444; color: white; }
+       .btn-x { background: #6b7280; color: white; }
+       .card { background: white; padding: 20px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+       .card h3 { color: var(--primary); margin-bottom: 15px; }
+       .report-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+       .download-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+       .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
+       .modal-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+       .modal-box h3 { color: var(--primary); margin-bottom: 20px; text-align: center; }
+       .close-modal { width: 100%; margin-top: 15px; padding: 12px; background: #6b7280; color: white; border: none; border-radius: 10px; cursor: pointer; }
+       .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+       .theme-option { padding: 20px; border-radius: 15px; cursor: pointer; text-align: center; color: white; font-weight: bold; border: 3px solid transparent; font-size: 12px; }
+       .attendance-history { max-height: 300px; overflow-y: auto; }
+       .history-item { display: flex; justify-content: space-between; padding: 10px; margin: 5px 0; border-radius: 8px; background: #f8f9fa; }
+       .history-present { border-left: 4px solid #10b981; }
+       .history-absent { border-left: 4px solid #ef4444; }
+       .profile-img { width: 100px; height: 100px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold; margin: 0 auto 20px; overflow: hidden; }
+       .profile-img img { width: 100%; height: 100%; object-fit: cover; }
+       .profile-detail { margin: 15px 0; }
+       .profile-detail label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; }
+       .profile-detail div { font-size: 16px; color: #333; font-weight: 500; }
+       .settings-input { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #e8e8e8; border-radius: 10px; }
+       .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+       .photo-upload { display: flex; align-items: center; gap: 15px; margin: 10px 0; }
+       .photo-preview { width: 60px; height: 60px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #999; overflow: hidden; }
+       .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
+       .photo-btn { flex: 1; padding: 10px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: 10px; text-align: center; cursor: pointer; font-size: 13px; }
+        input[type="file"] { display: none; }
     </style>
 </head>
 <body data-theme="purple">
@@ -137,12 +121,15 @@
         </div>
 
         <div class="container">
-            <!-- ATTENDANCE TAB -->
             <div class="tab-content active" id="attendance-tab">
                 <div class="date">📅 Date: <span id="today"></span></div>
-
                 <div class="add-form">
                     <h3>➕ Add New Student</h3>
+                    <div class="photo-upload">
+                        <div class="photo-preview" id="photoPreview">📷</div>
+                        <label class="photo-btn" for="studentPhoto">📸 Choose Photo</label>
+                        <input type="file" id="studentPhoto" accept="image/*">
+                    </div>
                     <input type="text" id="rollNo" placeholder="Roll No (Ex: 1)">
                     <input type="text" id="studentName" placeholder="Student Name (Ex: Rahul)">
                     <div class="form-row">
@@ -153,92 +140,41 @@
                     <textarea id="studentAddress" placeholder="Address" rows="2"></textarea>
                     <button class="add-btn" id="addStudentBtn">+ Add Student</button>
                 </div>
-
                 <input type="text" class="search" id="searchBox" placeholder="🔍 Search Student...">
-
                 <div class="stats">
-                    <div>
-                        <div class="label">Present</div>
-                        <div class="value" id="presentCount">0</div>
-                    </div>
-                    <div>
-                        <div class="label">Absent</div>
-                        <div class="value" id="absentCount">0</div>
-                    </div>
-                    <div>
-                        <div class="label">Total</div>
-                        <div class="value" id="totalCount">0</div>
-                    </div>
+                    <div><div class="label">Present</div><div class="value" id="presentCount">0</div></div>
+                    <div><div class="label">Absent</div><div class="value" id="absentCount">0</div></div>
+                    <div><div class="label">Total</div><div class="value" id="totalCount">0</div></div>
                 </div>
-
                 <div id="studentList"></div>
             </div>
 
-            <!-- REPORTS TAB -->
             <div class="tab-content" id="reports-tab">
                 <div class="card">
                     <h3>📊 Today's Summary</h3>
-                    <div class="report-item">
-                        <span>Date</span>
-                        <strong id="reportDate"></strong>
-                    </div>
-                    <div class="report-item">
-                        <span>Total Students</span>
-                        <strong id="reportTotal">0</strong>
-                    </div>
-                    <div class="report-item">
-                        <span>Present</span>
-                        <strong style="color: #10b981;" id="reportPresent">0</strong>
-                    </div>
-                    <div class="report-item">
-                        <span>Absent</span>
-                        <strong style="color: #ef4444;" id="reportAbsent">0</strong>
-                    </div>
-                    <div class="report-item">
-                        <span>Attendance %</span>
-                        <strong id="reportPercent">0%</strong>
-                    </div>
+                    <div class="report-item"><span>Date</span><strong id="reportDate"></strong></div>
+                    <div class="report-item"><span>Total Students</span><strong id="reportTotal">0</strong></div>
+                    <div class="report-item"><span>Present</span><strong style="color: #10b981;" id="reportPresent">0</strong></div>
+                    <div class="report-item"><span>Absent</span><strong style="color: #ef4444;" id="reportAbsent">0</strong></div>
+                    <div class="report-item"><span>Attendance %</span><strong id="reportPercent">0%</strong></div>
                     <button class="download-btn" id="downloadBtn">📥 Download Report</button>
                 </div>
-
-                <div class="card">
-                    <h3>❌ Absent Students List</h3>
-                    <div id="absentList">No absent students</div>
-                </div>
-
-                <div class="card">
-                    <h3>📅 Attendance History - All Dates</h3>
-                    <div id="attendanceHistory" class="attendance-history"></div>
-                </div>
+                <div class="card"><h3>❌ Absent Students List</h3><div id="absentList">No absent students</div></div>
+                <div class="card"><h3>📅 Attendance History - All Dates</h3><div id="attendanceHistory" class="attendance-history"></div></div>
             </div>
 
-            <!-- STUDENTS TAB -->
             <div class="tab-content" id="students-tab">
-                <div class="card">
-                    <h3>👥 All Students</h3>
-                    <div id="allStudentsList"></div>
-                </div>
+                <div class="card"><h3>👥 All Students</h3><div id="allStudentsList"></div></div>
             </div>
 
-            <!-- SETTINGS TAB -->
             <div class="tab-content" id="settings-tab">
                 <div class="card">
                     <h3>⚙️ App Settings</h3>
-                    <div class="report-item">
-                        <span>School Name</span>
-                        <input type="text" id="settingSchoolName" class="settings-input" placeholder="SDMSMK">
-                    </div>
-                    <div class="report-item">
-                        <span>Class Name</span>
-                        <input type="text" id="settingClassName" class="settings-input" placeholder="Class 302">
-                    </div>
-                    <div class="report-item">
-                        <span>Logged In As</span>
-                        <strong id="currentUser">Teacher</strong>
-                    </div>
+                    <div class="report-item"><span>School Name</span><input type="text" id="settingSchoolName" class="settings-input" placeholder="SDMSMK"></div>
+                    <div class="report-item"><span>Class Name</span><input type="text" id="settingClassName" class="settings-input" placeholder="Class 302"></div>
+                    <div class="report-item"><span>Logged In As</span><strong id="currentUser">Teacher</strong></div>
                     <button class="download-btn" id="saveSettingsBtn">💾 Save Settings</button>
                 </div>
-
                 <div class="card">
                     <h3>🎨 Choose Theme - 12 Colors</h3>
                     <div class="theme-grid">
@@ -247,7 +183,7 @@
                         <div class="theme-option" data-theme="orange" style="background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);">Orange</div>
                         <div class="theme-option" data-theme="pink" style="background: linear-gradient(135deg, #ec008c 0%, #fc6767 100%);">Pink</div>
                         <div class="theme-option" data-theme="blue" style="background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);">Blue</div>
-                        <div class="theme-option" data-theme="red" style="background: linear-gradient(135deg, #f44336 0%, #ff6b 100%);">Red</div>
+                        <div class="theme-option" data-theme="red" style="background: linear-gradient(135deg, #f44336 0%, #ff6b6b 100%);">Red</div>
                         <div class="theme-option" data-theme="teal" style="background: linear-gradient(135deg, #009688 0%, #4DB6AC 100%);">Teal</div>
                         <div class="theme-option" data-theme="indigo" style="background: linear-gradient(135deg, #3F51B5 0%, #7986CB 100%);">Indigo</div>
                         <div class="theme-option" data-theme="cyan" style="background: linear-gradient(135deg, #00BCD4 0%, #4DD0E1 100%);">Cyan</div>
@@ -256,7 +192,6 @@
                         <div class="theme-option" data-theme="rose" style="background: linear-gradient(135deg, #E91E63 0%, #F06292 100%);">Rose</div>
                     </div>
                 </div>
-
                 <div class="card">
                     <h3>🗑️ Data Management</h3>
                     <button class="download-btn" id="exportDataBtn" style="background: #2196F3;">📤 Export All Data</button>
@@ -266,43 +201,21 @@
         </div>
     </div>
 
-    <!-- PROFILE MODAL -->
     <div class="modal" id="profileModal">
         <div class="modal-box">
             <div class="profile-img" id="profileAvatar"></div>
             <h3 id="profileName"></h3>
-            <div class="profile-detail">
-                <label>Roll No</label>
-                <div id="profileRoll"></div>
-            </div>
-            <div class="profile-detail">
-                <label>Class</label>
-                <div id="profileClass"></div>
-            </div>
-            <div class="profile-detail">
-                <label>Father Number</label>
-                <div id="profileFather"></div>
-            </div>
-            <div class="profile-detail">
-                <label>Mother Number</label>
-                <div id="profileMother"></div>
-            </div>
-            <div class="profile-detail">
-                <label>Address</label>
-                <div id="profileAddress"></div>
-            </div>
-            <div class="profile-detail">
-                <label>Total Attendance</label>
-                <div id="profileAttendance"></div>
-            </div>
-            <div class="profile-detail">
-                <label>Attendance History</label>
-                <div id="profileHistory" class="attendance-history"></div>
-            </div>
+            <div class="profile-detail"><label>Roll No</label><div id="profileRoll"></div></div>
+            <div class="profile-detail"><label>Class</label><div id="profileClass"></div></div>
+            <div class="profile-detail"><label>Father Number</label><div id="profileFather"></div></div>
+            <div class="profile-detail"><label>Mother Number</label><div id="profileMother"></div></div>
+            <div class="profile-detail"><label>Address</label><div id="profileAddress"></div></div>
+            <div class="profile-detail"><label>Total Attendance</label><div id="profileAttendance"></div></div>
+            <div class="profile-detail"><label>Attendance History</label><div id="profileHistory" class="attendance-history"></div></div>
             <button class="close-modal" id="closeProfileBtn">Close</button>
         </div>
     </div>
-        <!-- THEME MODAL -->
+
     <div class="modal" id="themeModal">
         <div class="modal-box">
             <h3>Choose Theme Color</h3>
@@ -325,27 +238,21 @@
     </div>
 
     <script>
-        // Global Data
         let students = JSON.parse(localStorage.getItem('students')) || [];
         let attendanceHistory = JSON.parse(localStorage.getItem('attendanceHistory')) || {};
-        let settings = JSON.parse(localStorage.getItem('settings')) || {
-            schoolName: 'SDMSMK',
-            className: 'Class 302'
-        };
+        let settings = JSON.parse(localStorage.getItem('settings')) || { schoolName: 'SDMSMK', className: 'Class 302' };
+        let currentPhoto = null;
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             loadTheme();
             loadSettings();
-
-            if(localStorage.getItem('loggedIn') === 'true') {
-                showApp();
-            } else {
+            if(localStorage.getItem('loggedIn') === 'true') { showApp(); }
+            else {
                 document.getElementById('loginPage').style.display = 'flex';
                 document.getElementById('mainApp').style.display = 'none';
+                document.body.style.background = '#f0f4f8';
             }
 
-            // Event Listeners
             document.getElementById('signInBtn').addEventListener('click', login);
             document.getElementById('logoutBtn').addEventListener('click', logout);
             document.getElementById('themeBtn').addEventListener('click', showThemeSelector);
@@ -357,32 +264,30 @@
             document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
             document.getElementById('searchBox').addEventListener('keyup', searchStudent);
             document.getElementById('closeProfileBtn').addEventListener('click', closeProfile);
-
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    switchTab(this.dataset.tab, this);
-                });
-            });
-
-            document.querySelectorAll('.theme-option').forEach(opt => {
-                opt.addEventListener('click', function() {
-                    setTheme(this.dataset.theme);
-                });
-            });
+            document.getElementById('studentPhoto').addEventListener('change', handlePhotoSelect);
+            document.querySelectorAll('.tab').forEach(tab => { tab.addEventListener('click', function() { switchTab(this.dataset.tab, this); }); });
+            document.querySelectorAll('.theme-option').forEach(opt => { opt.addEventListener('click', function() { setTheme(this.dataset.theme); }); });
         });
 
-        function loadTheme() {
-            let savedTheme = localStorage.getItem('theme') || 'purple';
-            document.body.setAttribute('data-theme', savedTheme);
+        function handlePhotoSelect(e) {
+            const file = e.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    currentPhoto = event.target.result;
+                    document.getElementById('photoPreview').innerHTML = `<img src="${currentPhoto}">`;
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
+        function loadTheme() { document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'purple'); }
         function loadSettings() {
             document.getElementById('schoolName').textContent = settings.schoolName;
             document.getElementById('className').textContent = settings.className + ' - Attendance';
             document.getElementById('settingSchoolName').value = settings.schoolName;
             document.getElementById('settingClassName').value = settings.className;
         }
-
         function saveSettings() {
             settings.schoolName = document.getElementById('settingSchoolName').value.trim() || 'SDMSMK';
             settings.className = document.getElementById('settingClassName').value.trim() || 'Class 302';
@@ -390,64 +295,47 @@
             loadSettings();
             alert('Settings saved!');
         }
-
         function login() {
-            let user = document.getElementById('username').value.trim();
             let pass = document.getElementById('password').value.trim();
-
-            if(user || pass) {
+            if(pass === 'teacher123' || pass) {
                 localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('currentUser', user || 'Teacher');
+                localStorage.setItem('currentUser', 'Teacher');
                 showApp();
-            } else {
-                alert('Name leka Password enter chey - em pettina ok');
-            }
+            } else { alert('Password enter chey'); }
         }
-
         function logout() {
             if(confirm('Logout avvala?')) {
                 localStorage.setItem('loggedIn', 'false');
                 document.getElementById('loginPage').style.display = 'flex';
                 document.getElementById('mainApp').style.display = 'none';
-                document.getElementById('username').value = '';
                 document.getElementById('password').value = '';
+                document.body.style.background = '#f0f4f8';
             }
         }
-
         function showApp() {
             document.getElementById('loginPage').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
+            document.body.style.background = 'var(--gradient)';
             document.getElementById('currentUser').textContent = localStorage.getItem('currentUser') || 'Teacher';
             document.getElementById('today').textContent = new Date().toLocaleDateString('en-IN');
             renderStudents();
             updateReports();
         }
-
         function switchTab(tabName, btn) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-
             btn.classList.add('active');
             document.getElementById(tabName + '-tab').classList.add('active');
-
             if(tabName === 'reports') updateReports();
             if(tabName === 'students') renderAllStudents();
         }
-
-        function showThemeSelector() {
-            document.getElementById('themeModal').style.display = 'flex';
-        }
-
-        function hideThemeSelector() {
-            document.getElementById('themeModal').style.display = 'none';
-        }
-
+        function showThemeSelector() { document.getElementById('themeModal').style.display = 'flex'; }
+        function hideThemeSelector() { document.getElementById('themeModal').style.display = 'none'; }
         function setTheme(theme) {
             document.body.setAttribute('data-theme', theme);
             localStorage.setItem('theme', theme);
             hideThemeSelector();
         }
-
         function addStudent() {
             let roll = document.getElementById('rollNo').value.trim();
             let name = document.getElementById('studentName').value.trim();
@@ -455,44 +343,22 @@
             let motherNum = document.getElementById('motherNumber').value.trim();
             let studentClass = document.getElementById('studentClass').value.trim() || 'N/A';
             let address = document.getElementById('studentAddress').value.trim() || 'N/A';
-
-            if(!roll ||!name ||!fatherNum ||!motherNum) {
-                alert("Roll, Name, Father Number, Mother Number anni fill chey");
-                return;
-            }
-
-            if(fatherNum.length!== 10 || motherNum.length!== 10) {
-                alert("Father & Mother numbers 10 digits undali\nEx: 9490475335\n+91 vaddu, 0 vaddu");
-                return;
-            }
-
-            if(students.find(s => s.roll === roll)) {
-                alert("Ee Roll number already undi");
-                return;
-            }
-
-            students.push({
-                roll: roll,
-                name: name,
-                fatherNumber: fatherNum,
-                motherNumber: motherNum,
-                class: studentClass,
-                address: address,
-                status: 'Present',
-                attendanceRecords: {}
-            });
-
+            if(!roll ||!name ||!fatherNum ||!motherNum) { alert("Roll, Name, Father Number, Mother Number anni fill chey"); return; }
+            if(fatherNum.length!== 10 || motherNum.length!== 10) { alert("Father & Mother numbers 10 digits undali\nEx: 9490475335\n+91 vaddu, 0 vaddu"); return; }
+            if(students.find(s => s.roll === roll)) { alert("Ee Roll number already undi"); return; }
+            students.push({ roll: roll, name: name, fatherNumber: fatherNum, motherNumber: motherNum, class: studentClass, address: address, photo: currentPhoto, status: 'Present', attendanceRecords: {} });
             saveData();
             renderStudents();
-
             document.getElementById('rollNo').value = '';
             document.getElementById('studentName').value = '';
             document.getElementById('fatherNumber').value = '';
             document.getElementById('motherNumber').value = '';
             document.getElementById('studentClass').value = '';
             document.getElementById('studentAddress').value = '';
+            document.getElementById('studentPhoto').value = '';
+            document.getElementById('photoPreview').innerHTML = '📷';
+            currentPhoto = null;
         }
-
         function markPresent(roll) {
             let student = students.find(s => s.roll === roll);
             student.status = 'Present';
@@ -500,22 +366,16 @@
             saveData();
             renderStudents();
         }
-
         function markAbsent(roll) {
             let student = students.find(s => s.roll === roll);
             student.status = 'Absent';
             recordAttendance(roll, 'Absent');
             saveData();
             renderStudents();
-
             let date = new Date().toLocaleDateString('en-IN');
-            let message = `${settings.sri durga Malleswaram Siddhartha mahila kalasala collegeName}: Mee pillalu ${student.name} (${student.roll}) ee roju ${date} na school ki raaledu. Gamaninchagalaru.`;
-
-            // FATHER SMS
+            let message = `${settings.schoolName}: Mee pillalu ${student.name} (${student.roll}) ee roju ${date} na college ki raaledu. Gamaninchagalaru.`;
             let smsFather = `sms:${student.fatherNumber}?body=${encodeURIComponent(message)}`;
             window.location.href = smsFather;
-
-            // MOTHER SMS - After 3 seconds
             setTimeout(() => {
                 if(confirm('Father ki SMS pampanu. Mother ki kuda pampala?')) {
                     let smsMother = `sms:${student.motherNumber}?body=${encodeURIComponent(message)}`;
@@ -523,19 +383,15 @@
                 }
             }, 3000);
         }
-
         function recordAttendance(roll, status) {
             let today = new Date().toISOString().split('T')[0];
             let student = students.find(s => s.roll === roll);
             if(!student.attendanceRecords) student.attendanceRecords = {};
             student.attendanceRecords[today] = status;
-
             if(!attendanceHistory[today]) attendanceHistory[today] = {};
-            attendanceHistory[today][roll] = status;
-
+            attendanceHistory[today] = status;
             localStorage.setItem('attendanceHistory', JSON.stringify(attendanceHistory));
         }
-
         function deleteStudent(roll) {
             if(confirm('Ee student ni delete cheyala?')) {
                 students = students.filter(s => s.roll!== roll);
@@ -543,10 +399,73 @@
                 renderStudents();
             }
         }
+        function renderStudents() {
+            let list = document.getElementById('studentList');
+            let search = document.getElementById('searchBox').value.toLowerCase();
+            let filtered = students.filter(s => s.name.toLowerCase().includes(search) || s.roll.includes(search));
 
+            let present = students.filter(s => s.status === 'Present').length;
+            let absent = students.filter(s => s.status === 'Absent').length;
+            document.getElementById('presentCount').textContent = present;
+            document.getElementById('absentCount').textContent = absent;
+            document.getElementById('totalCount').textContent = students.length;
+
+            if(filtered.length === 0) {
+                list.innerHTML = '<div style="text-align:center;color:white;padding:20px;">No students found</div>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(s => {
+                let avatarContent = s.photo? `<img src="${s.photo}">` : s.name.charAt(0).toUpperCase();
+                return `
+                <div class="student-card" onclick="showProfile('${s.roll}')">
+                    <div style="display:flex;align-items:center;">
+                        <div class="student-avatar">${avatarContent}</div>
+                        <div class="student-info">
+                            <span class="roll-badge">Roll: ${s.roll}</span>
+                            <div class="student-name">${s.name}</div>
+                            <div class="student-status">Status: ${s.status}</div>
+                            <div class="parent-num">F: ${s.fatherNumber} | M: ${s.motherNumber}</div>
+                        </div>
+                    </div>
+                    <div class="actions" onclick="event.stopPropagation()">
+                        <button class="btn btn-p" onclick="markPresent('${s.roll}')">P</button>
+                        <button class="btn btn-a" onclick="markAbsent('${s.roll}')">A</button>
+                        <button class="btn btn-x" onclick="deleteStudent('${s.roll}')">×</button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+        function renderAllStudents() {
+            let list = document.getElementById('allStudentsList');
+            if(students.length === 0) {
+                list.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">No students added yet</div>';
+                return;
+            }
+            list.innerHTML = students.map(s => {
+                let avatarContent = s.photo? `<img src="${s.photo}">` : s.name.charAt(0).toUpperCase();
+                let records = s.attendanceRecords || {};
+                let total = Object.keys(records).length;
+                let present = Object.values(records).filter(st => st === 'Present').length;
+                let percent = total > 0? Math.round((present/total)*100) : 0;
+                return `
+                <div class="student-card" onclick="showProfile('${s.roll}')">
+                    <div style="display:flex;align-items:center;">
+                        <div class="student-avatar">${avatarContent}</div>
+                        <div class="student-info">
+                            <span class="roll-badge">Roll: ${s.roll}</span>
+                            <div class="student-name">${s.name}</div>
+                            <div class="student-status">Class: ${s.class || 'N/A'} | Attendance: ${percent}%</div>
+                            <div class="parent-num">F: ${s.fatherNumber} | M: ${s.motherNumber}</div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
         function showProfile(roll) {
             let student = students.find(s => s.roll === roll);
-            document.getElementById('profileAvatar').textContent = student.name.charAt(0).toUpperCase();
+            let avatarContent = student.photo? `<img src="${student.photo}">` : student.name.charAt(0).toUpperCase();
+            document.getElementById('profileAvatar').innerHTML = avatarContent;
             document.getElementById('profileName').textContent = student.name;
             document.getElementById('profileRoll').textContent = student.roll;
             document.getElementById('profileClass').textContent = student.class || 'N/A';
@@ -564,180 +483,76 @@
             Object.keys(records).sort().reverse().forEach(date => {
                 let status = records[date];
                 let cls = status === 'Present'? 'history-present' : 'history-absent';
-                historyHTML += `<div class="history-item ${cls}"><span>${date}</span><strong>${status}</strong></div>`;
+                historyHTML += `<div class="history-item ${cls}"><span>${new Date(date).toLocaleDateString('en-IN')}</span><strong>${status}</strong></div>`;
             });
-            document.getElementById('profileHistory').innerHTML = historyHTML || 'No records';
-
+            document.getElementById('profileHistory').innerHTML = historyHTML || '<div style="text-align:center;color:#888;">No records</div>';
             document.getElementById('profileModal').style.display = 'flex';
         }
-
-        function closeProfile() {
-            document.getElementById('profileModal').style.display = 'none';
-        }
-
-        function renderStudents() {
-            let list = document.getElementById('studentList');
-            let search = document.getElementById('searchBox').value.toLowerCase();
-
-            let filtered = students.filter(s =>
-                s.name.toLowerCase().includes(search) ||
-                s.roll.toLowerCase().includes(search)
-            );
-
-            list.innerHTML = filtered.map(s => `
-                <div class="student-card" onclick="showProfile('${s.roll}')">
-                    <div style="display: flex; align-items: center;">
-                        <div class="student-avatar">${s.name.charAt(0).toUpperCase()}</div>
-                        <div class="student-info">
-                            <div class="roll-badge">Roll ${s.roll}</div>
-                            <div class="student-name">${s.name}</div>
-                            <div class="student-status">${s.status}</div>
-                            <div class="parent-num">👨 ${s.fatherNumber}</div>
-                            <div class="parent-num">👩 ${s.motherNumber}</div>
-                        </div>
-                    </div>
-                    <div class="actions" onclick="event.stopPropagation()">
-                        <button class="btn btn-p" onclick="markPresent('${s.roll}')">P</button>
-                        <button class="btn btn-a" onclick="markAbsent('${s.roll}')">A</button>
-                        <button class="btn btn-x" onclick="deleteStudent('${s.roll}')">×</button>
-                    </div>
-                </div>
-            `).join('');
-
-            updateStats();
-        }
-
-        function renderAllStudents() {
-            let list = document.getElementById('allStudentsList');
-            list.innerHTML = students.map(s => {
-                let records = s.attendanceRecords || {};
-                let total = Object.keys(records).length;
-                let present = Object.values(records).filter(st => st === 'Present').length;
-                let percent = total > 0? Math.round((present/total)*100) : 0;
-
-                return `
-                <div class="student-card" onclick="showProfile('${s.roll}')">
-                    <div style="display: flex; align-items: center;">
-                        <div class="student-avatar">${s.name.charAt(0).toUpperCase()}</div>
-                        <div class="student-info">
-                            <div class="roll-badge">Roll ${s.roll}</div>
-                            <div class="student-name">${s.name}</div>
-                            <div class="student-status">Attendance: ${percent}% (${present}/${total})</div>
-                            <div class="parent-num">👨 ${s.fatherNumber} | 👩 ${s.motherNumber}</div>
-                        </div>
-                    </div>
-                    <div class="actions" onclick="event.stopPropagation()">
-                        <button class="btn btn-x" onclick="deleteStudent('${s.roll}')">×</button>
-                    </div>
-                </div>
-            `}).join('');
-        }
-
-        function updateStats() {
-            let present = students.filter(s => s.status === 'Present').length;
-            let absent = students.filter(s => s.status === 'Absent').length;
-            document.getElementById('presentCount').textContent = present;
-            document.getElementById('absentCount').textContent = absent;
-            document.getElementById('totalCount').textContent = students.length;
-        }
-
+        function closeProfile() { document.getElementById('profileModal').style.display = 'none'; }
+        function searchStudent() { renderStudents(); }
         function updateReports() {
+            let today = new Date().toLocaleDateString('en-IN');
             let present = students.filter(s => s.status === 'Present').length;
             let absent = students.filter(s => s.status === 'Absent').length;
             let total = students.length;
             let percent = total > 0? Math.round((present/total)*100) : 0;
 
-            document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-IN');
+            document.getElementById('reportDate').textContent = today;
             document.getElementById('reportTotal').textContent = total;
             document.getElementById('reportPresent').textContent = present;
             document.getElementById('reportAbsent').textContent = absent;
             document.getElementById('reportPercent').textContent = percent + '%';
 
             let absentStudents = students.filter(s => s.status === 'Absent');
-            document.getElementById('absentList').innerHTML = absentStudents.length > 0
-         ? absentStudents.map(s => `<div class="report-item"><span>${s.roll} - ${s.name}</span><span>👨${s.fatherNumber} 👩${s.motherNumber}</span></div>`).join('')
-                : 'No absent students';
+            let absentHTML = absentStudents.length > 0? absentStudents.map(s => `<div class="report-item"><span>${s.roll} - ${s.name}</span><strong>${s.fatherNumber}</strong></div>`).join('') : '<div style="text-align:center;color:#888;">All Present 🎉</div>';
+            document.getElementById('absentList').innerHTML = absentHTML;
 
-            // All Dates History
             let historyHTML = '';
             Object.keys(attendanceHistory).sort().reverse().forEach(date => {
-                let dayStudents = students.filter(s => s.attendanceRecords && s.attendanceRecords[date]);
-                let dayPresent = dayStudents.filter(s => s.attendanceRecords[date] === 'Present').length;
-                let dayTotal = dayStudents.length;
-                let dayPercent = dayTotal > 0? Math.round((dayPresent/dayTotal)*100) : 0;
-                historyHTML += `<div class="history-item"><span>${date}</span><strong>${dayPresent}/${dayTotal} (${dayPercent}%)</strong></div>`;
+                historyHTML += `<div class="history-item"><span>${new Date(date).toLocaleDateString('en-IN')}</span><strong>Recorded</strong></div>`;
             });
-            document.getElementById('attendanceHistory').innerHTML = historyHTML || 'No history';
+            document.getElementById('attendanceHistory').innerHTML = historyHTML || '<div style="text-align:center;color:#888;">No history</div>';
         }
-                function downloadReport() {
+        function downloadReport() {
+            let today = new Date().toLocaleDateString('en-IN');
             let present = students.filter(s => s.status === 'Present').length;
             let absent = students.filter(s => s.status === 'Absent').length;
-            let date = new Date().toLocaleDateString('en-IN');
+            let total = students.length;
+            let percent = total > 0? Math.round((present/total)*100) : 0;
 
-            let report = `${settings.schoolName} - Attendance Report\n`;
-            report += `Class: ${settings.className}\n`;
-            report += `Date: ${date}\n\n`;
-            report += `Total Students: ${students.length}\n`;
-            report += `Present: ${present}\n`;
-            report += `Absent: ${absent}\n\n`;
-            report += `Absent Students:\n`;
-            students.filter(s => s.status === 'Absent').forEach(s => {
-                report += `${s.roll} - ${s.name} - Father: ${s.fatherNumber} - Mother: ${s.motherNumber}\n`;
-            });
-
-            report += `\n\nAll Students:\n`;
+            let csv = `SDMSMK Attendance Report\nDate: ${today}\nTotal: ${total}\nPresent: ${present}\nAbsent: ${absent}\nPercentage: ${percent}%\n\nRoll No,Name,Class,Status,Father,Mother\n`;
             students.forEach(s => {
-                let records = s.attendanceRecords || {};
-                let total = Object.keys(records).length;
-                let presentCount = Object.values(records).filter(st => st === 'Present').length;
-                let percent = total > 0? Math.round((presentCount/total)*100) : 0;
-                report += `${s.roll} - ${s.name} - ${percent}% - F:${s.fatherNumber} M:${s.motherNumber}\n`;
+                csv += `${s.roll},${s.name},${s.class},${s.status},${s.fatherNumber},${s.motherNumber}\n`;
             });
 
-            let blob = new Blob([report], { type: 'text/plain' });
+            let blob = new Blob([csv], { type: 'text/csv' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = `Attendance_${date}.txt`;
+            a.download = `Attendance_${today.replace(/\//g,'-')}.csv`;
             a.click();
         }
-
+        function saveData() { localStorage.setItem('students', JSON.stringify(students)); }
         function clearAllData() {
-            if(confirm('Anni students data delete avthundi. Sure na?')) {
+            if(confirm('Anni students delete cheyala? Ee action reverse cheyyalem!')) {
                 students = [];
                 attendanceHistory = {};
-                saveData();
-                localStorage.setItem('attendanceHistory', JSON.stringify({}));
+                localStorage.removeItem('students');
+                localStorage.removeItem('attendanceHistory');
                 renderStudents();
                 updateReports();
-                alert('Data clear ayyindi');
+                alert('All data cleared!');
             }
         }
-
         function exportData() {
-            let data = {
-                students: students,
-                attendanceHistory: attendanceHistory,
-                settings: settings
-            };
+            let data = { students: students, attendanceHistory: attendanceHistory, settings: settings };
             let blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             let url = URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
             a.download = `SDMSMK_Backup_${new Date().toISOString().split('T')[0]}.json`;
             a.click();
-            alert('Data export ayyindi!');
-        }
-
-        function searchStudent() {
-            renderStudents();
-        }
-
-        function saveData() {
-            localStorage.setItem('students', JSON.stringify(students));
         }
     </script>
 </body>
 </html>
-
-        
