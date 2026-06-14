@@ -3,820 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SDMSMK - Attendance Pro v7.0</title>
+    <title>SDMSMK - Student Attendance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        :root { --primary: #667eea; --secondary: #764ba2; --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        body[data-theme="purple"] { --primary: #667eea; --secondary: #764ba2; --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        body[data-theme="green"] { --primary: #11998e; --secondary: #38ef7d; --gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-        body[data-theme="orange"] { --primary: #f12711; --secondary: #f5af19; --gradient: linear-gradient(135deg, #f12711 0%, #f5af19 100%); }
-        body[data-theme="pink"] { --primary: #ec008c; --secondary: #fc6767; --gradient: linear-gradient(135deg, #ec008c 0%, #fc6767 100%); }
-        body[data-theme="blue"] { --primary: #2196F3; --secondary: #21CBF3; --gradient: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%); }
-        body[data-theme="red"] { --primary: #f44336; --secondary: #ff6b6b; --gradient: linear-gradient(135deg, #f44336 0%, #ff6b6b 100%); }
-        body[data-theme="teal"] { --primary: #009688; --secondary: #4DB6AC; --gradient: linear-gradient(135deg, #009688 0%, #4DB6AC 100%); }
-        body[data-theme="indigo"] { --primary: #3F51B5; --secondary: #7986CB; --gradient: linear-gradient(135deg, #3F51B5 0%, #7986CB 100%); }
-        body[data-theme="cyan"] { --primary: #00BCD4; --secondary: #4DD0E1; --gradient: linear-gradient(135deg, #00BCD4 0%, #4DD0E1 100%); }
-        body[data-theme="lime"] { --primary: #CDDC39; --secondary: #DCE775; --gradient: linear-gradient(135deg, #CDDC39 0%, #DCE775 100%); }
-        body[data-theme="amber"] { --primary: #FFC107; --secondary: #FFD54F; --gradient: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%); }
-        body[data-theme="rose"] { --primary: #E91E63; --secondary: #F06292; --gradient: linear-gradient(135deg, #E91E63 0%, #F06292 100%); }
-
-        body { background: #f0f4f8; min-height: 100vh; transition: all 0.3s; }
-      .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; background: #f0f4f8; }
-      .login-box { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); width: 100%; max-width: 380px; }
-      .login-box h2 { text-align: center; color: #333; margin-bottom: 8px; font-size: 24px; font-weight: 600; }
-      .login-box h2::before { content: "🎓 "; }
-      .login-box p { text-align: center; color: #888; margin-bottom: 30px; font-size: 15px; }
-      .login-box input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #333; border-radius: 10px; font-size: 15px; }
-      .login-box input:focus { outline: none; border-color: #1a73e8; }
-      .login-btn { width: 100%; background: #1a73e8; color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-      .login-btn:hover { background: #1557b0; }
-      .login-note { text-align: center; margin-top: 15px; font-size: 13px; color: #888; }
-
-      .app-container { display: none; }
-      .app-container body { background: var(--gradient); }
-      .header { background: var(--gradient); color: white; padding: 20px; text-align: center; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-      .header h1 { font-size: 26px; font-weight: 600; }
-      .header span { font-size: 14px; opacity: 0.9; }
-      .header-btns { position: absolute; right: 15px; top: 15px; display: flex; gap: 8px; }
-      .theme-btn,.logout { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; }
-      .tabs { display: flex; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow-x: auto; }
-      .tab { flex: 1; padding: 14px; text-align: center; cursor: pointer; border: none; background: white; font-weight: 500; color: #666; white-space: nowrap; min-width: 100px; }
-      .tab.active { background: #f8f9ff; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: bold; }
-      .container { padding: 20px 15px; max-width: 700px; margin: 0 auto; }
-      .tab-content { display: none; }
-      .tab-content.active { display: block; }
-      .date { text-align: center; color: white; margin: 15px 0; font-size: 16px; font-weight: 500; }
-      .holiday-badge { background: #ff9800; color: white; padding: 5px 15px; border-radius: 20px; font-size: 14px; display: inline-block; margin-top: 8px; }
-      .add-form { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-      .add-form h3 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
-      .add-form input,.add-form textarea,.add-form select { width: 100%; padding: 13px; margin: 8px 0; border: 2px solid #e8e8e8; border-radius: 10px; font-size: 14px; font-family: inherit; }
-      .add-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-      .search { width: 100%; padding: 13px; margin: 15px 0; border: 2px solid white; border-radius: 10px; background: white; font-size: 14px; }
-      .class-filter { width: 100%; padding: 13px; margin: 0 0 15px 0; border: 2px solid white; border-radius: 10px; background: white; font-size: 14px; }
-      .stats { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-      .stats div { text-align: center; }
-      .stats.label { font-size: 12px; color: #888; margin-bottom: 5px; }
-      .stats.value { font-size: 24px; font-weight: bold; color: var(--primary); }
-      .student-card { 
-    background: white; 
-    padding: 15px; 
-    margin: 12px 0; 
-    border-radius: 15px; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
-    border-left: 5px solid var(--primary); 
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-      .student-info { flex: 1; }
-      .student-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; margin-right: 15px; overflow: hidden; }
-      .student-avatar img { width: 100%; height: 100%; object-fit: cover; }
-      .roll-badge { background: var(--gradient); color: white; padding: 4px 10px; border-radius: 15px; font-size: 12px; display: inline-block; margin-bottom: 8px; font-weight: 600; }
-      .student-name { font-size: 17px; font-weight: 600; margin: 5px 0; color: #333; }
-      .student-status { font-size: 13px; color: #666; margin: 3px 0; }
-      .parent-num { font-size: 11px; color: #888; margin: 2px 0; }
-      .actions { display: flex; gap: 8px; }
-      .btn { width: 45px; height: 45px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; }
-      .btn-p { background: #10b981; color: white; }
-      .btn-a { background: #ef4444; color: white; }
-      .btn-e { background: #3b82f6; color: white; }
-      .btn-x { background: #6b7280; color: white; }
-      .card { background: white; padding: 20px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-      .card h3 { color: var(--primary); margin-bottom: 15px; }
-      .report-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-      .download-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-      .bulk-btn { background: #25D366!important; }
-      .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; overflow-y: auto; padding: 20px; }
-      .modal-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
-      .close-modal { width: 100%; margin-top: 15px; padding: 12px; background: #6b7280; color: white; border: none; border-radius: 10px; cursor: pointer; }
-      .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-      .theme-option { padding: 20px; border-radius: 15px; cursor: pointer; text-align: center; color: white; font-weight: bold; border: 3px solid transparent; font-size: 12px; }
-      .attendance-history { max-height: 300px; overflow-y: auto; }
-      .history-item { display: flex; justify-content: space-between; padding: 10px; margin: 5px 0; border-radius: 8px; background: #f8f9fa; }
-      .history-present { border-left: 4px solid #10b981; }
-      .history-absent { border-left: 4px solid #ef4444; }
-      .history-holiday { border-left: 4px solid #ff9800; }
-      .profile-img { width: 100px; height: 100px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold; margin: 0 auto 20px; overflow: hidden; }
-      .profile-img img { width: 100%; height: 100%; object-fit: cover; }
-      .profile-detail { margin: 15px 0; }
-      .profile-detail label { font-size: 12px; color: #888; display: block; margin-bottom: 5px; }
-      .profile-detail div { font-size: 16px; color: #333; font-weight: 500; }
-      .settings-input { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #e8e8e8; border-radius: 10px; }
-      .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-      .photo-upload { display: flex; align-items: center; gap: 15px; margin: 10px 0; }
-      .photo-preview { width: 60px; height: 60px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #999; overflow: hidden; }
-      .photo-preview img { width: 100%; height: 100%; object-fit: cover; }
-      .photo-btn { flex: 1; padding: 10px; background: #f0f0f0; border: 2px dashed #ccc; border-radius: 10px; text-align: center; cursor: pointer; font-size: 13px; }
-        input[type="file"] { display: none; }
-      .holiday-list { max-height: 200px; overflow-y: auto; margin: 10px 0; }
-      .holiday-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; margin: 5px 0; background: #fff3e0; border-radius: 8px; }
-      
-      /* CALENDAR STYLES */
-      .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-      .calendar-nav { background: var(--gradient); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-      .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-      .calendar-day-header { text-align: center; font-weight: bold; color: var(--primary); padding: 8px; font-size: 12px; }
-      .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 13px; cursor: pointer; position: relative; background: #f8f9fa; }
-      .calendar-day.today { border: 2px solid var(--primary); font-weight: bold; }
-      .calendar-day.present { background: #d1fae5; color: #065f46; }
-      .calendar-day.absent { background: #fee2e2; color: #991b1b; }
-      .calendar-day.holiday { background: #ffedd5; color: #9a3412; }
-      .calendar-day.other-month { opacity: 0.3; }
-      .calendar-legend { display: flex; justify-content: space-around; margin-top: 15px; font-size: 12px; }
-      .legend-item { display: flex; align-items: center; gap: 5px; }
-      .legend-box { width: 15px; height: 15px; border-radius: 3px; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background: var(--gradient);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+       .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+       .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+       .login-box h1 { color: var(--primary); margin-bottom: 10px; font-size: 28px; }
+       .login-box p { color: #666; margin-bottom: 30px; }
+
+       .input-group { margin-bottom: 20px; text-align: left; }
+       .input-group label { display: block; margin-bottom: 8px; color: #333; font-weight: 500; }
+       .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+       .input-group input:focus { border-color: var(--primary); outline: none; }
+
+       .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+       .login-btn:hover { transform: translateY(-2px); }
+
+       .main-app { display: none; padding: 20px; max-width: 1400px; margin: 0 auto; }
+
+       .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+       .header h1 { color: var(--primary); font-size: 24px; }
+       .header-right { display: flex; gap: 15px; align-items: center; }
+
+       .theme-btn,.logout-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+       .theme-btn { background: var(--primary); color: white; }
+       .logout-btn { background: var(--danger); color: white; }
+
+       .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+       .tab {
+            padding: 12px 25px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #666;
+        }
+       .tab.active { background: var(--gradient); color: white; }
+
+       .tab-content { display: none; }
+       .tab-content.active { display: block; }
+
+       .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+       .student-card {
+            background: white;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid var(--primary);
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+       .student-info { display: flex; align-items: center; gap: 15px; }
+       .student-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+       .student-details h3 { margin-bottom: 5px; color: #333; }
+       .student-details p { color: #666; font-size: 14px; }
+
+       .attendance-actions { display: flex; gap: 10px; }
+       .att-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+       .present { background: var(--success); color: white; }
+       .absent { background: var(--danger); color: white; }
+       .edit-btn { background: var(--warning); color: white; }
+
+       .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+       .modal.active { display: flex; }
+
+       .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+       .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+       .modal-header h2 { color: var(--primary); }
+       .close-btn { background: none; border: none; font-size: 28px; cursor: pointer; color: #666; }
+
+       .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+       .btn-primary { background: var(--primary); color: white; }
+       .btn-success { background: var(--success); color: white; }
+
+        #today { color: #666; font-size: 14px; margin-top: 5px; }
     </style>
 </head>
-<body data-theme="purple">
-    <div class="login-container" id="loginPage">
+<body>
+    <div id="loginPage" class="login-container">
         <div class="login-box">
-            <h2>Teacher Login</h2>
-            <p>Student Attendance System</p>
-            <input type="password" id="password" placeholder="••••••••••">
+            <h1>🎓 SDMSMK</h1>
+            <p>Student Attendance Tracker</p>
+            <div class="input-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter Password">
+            </div>
             <button class="login-btn" id="signInBtn">Login</button>
-            <div class="login-note">Default: teacher123</div>
+            <p style="margin-top: 20px; font-size: 13px; color: #999;">Default: teacher123</p>
         </div>
     </div>
 
-    <div class="app-container" id="mainApp">
+    <div id="mainApp" class="main-app">
         <div class="header">
-            <h1 id="schoolName">SDMSMK</h1>
-            <span id="className">Class 302 - Attendance</span>
-            <div class="header-btns">
+            <div>
+                <h1>🎓 SDMSMK Attendance</h1>
+                <div id="today"></div>
+            </div>
+            <div class="header-right">
                 <button class="theme-btn" id="themeBtn">🎨 Theme</button>
-                <button class="logout" id="logoutBtn">Logout</button>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
             </div>
         </div>
 
         <div class="tabs">
-            <button class="tab active" data-tab="attendance">Attendance</button>
-            <button class="tab" data-tab="reports">Reports</button>
-            <button class="tab" data-tab="students">Students</button>
-            <button class="tab" data-tab="settings">Settings</button>
+            <button class="tab active" onclick="switchTab('attendance', this)">📝 Attendance</button>
+            <button class="tab" onclick="switchTab('students', this)">👥 Students</button>
+            <button class="tab" onclick="switchTab('reports', this)">📊 Reports</button>
+            <button class="tab" onclick="switchTab('settings', this)">⚙️ Settings</button>
         </div>
 
-        <div class="container">
-            <div class="tab-content active" id="attendance-tab">
-                <div class="date">📅 Date: <span id="today"></span><br><span id="holidayStatus"></span></div>
-                <div class="add-form">
-                    <h3>➕ Add New Student</h3>
-                    <div class="photo-upload">
-                        <div class="photo-preview" id="photoPreview">📷</div>
-                        <label class="photo-btn" for="studentPhoto">📸 Choose Photo</label>
-                        <input type="file" id="studentPhoto" accept="image/*">
-                    </div>
-                    <input type="text" id="rollNo" placeholder="Roll No (Ex: 1)">
-                    <input type="text" id="studentName" placeholder="Student Name (Ex: Rahul)">
-                    <div class="form-row">
-                        <input type="tel" id="fatherNumber" placeholder="Father Mobile (Ex: 9490475335)">
-                        <input type="tel" id="motherNumber" placeholder="Mother Mobile (Ex: 9490475336)">
-                    </div>
-                    <input type="text" id="studentClass" placeholder="Class (Ex: 10th A)">
-                    <textarea id="studentAddress" placeholder="Address" rows="2"></textarea>
-                    <button class="add-btn" id="addStudentBtn">+ Add Student</button>
-                </div>
-                <select class="class-filter" id="classFilter">
-                    <option value="all">All Classes</option>
-                </select>
-                <input type="text" class="search" id="searchBox" placeholder="🔍 Search Student...">
-                <div class="stats">
-                    <div><div class="label">Present</div><div class="value" id="presentCount">0</div></div>
-                    <div><div class="label">Absent</div><div class="value" id="absentCount">0</div></div>
-                    <div><div class="label">Total</div><div class="value" id="totalCount">0</div></div>
-                </div>
-                <div id="studentList"></div>
+        <div id="attendance-tab" class="tab-content active">
+            <div class="card">
+                <h2>Mark Attendance</h2>
+                <div id="studentsList"></div>
             </div>
+        </div>
 
-            <div class="tab-content" id="reports-tab">
-                <div class="card">
-                    <h3>📅 Attendance Calendar</h3>
-                    <div class="calendar-header">
-                        <button class="calendar-nav" id="prevMonth">← Prev</button>
-                        <h4 id="calendarMonth"></h4>
-                        <button class="calendar-nav" id="nextMonth">Next →</button>
-                    </div>
-                    <div class="calendar-grid" id="calendarGrid"></div>
-                    <div class="calendar-legend">
-                        <div class="legend-item"><div class="legend-box" style="background:#d1fae5;"></div><span>Present</span></div>
-                        <div class="legend-item"><div class="legend-box" style="background:#fee2e2;"></div><span>Absent</span></div>
-                        <div class="legend-item"><div class="legend-box" style="background:#ffedd5;"></div><span>Holiday</span></div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>📊 Today's Summary</h3>
-                    <div class="report-item"><span>Date</span><strong id="reportDate"></strong></div>
-                    <div class="report-item"><span>Total Students</span><strong id="reportTotal">0</strong></div>
-                    <div class="report-item"><span>Present</span><strong style="color: #10b981;" id="reportPresent">0</strong></div>
-                    <div class="report-item"><span>Absent</span><strong style="color: #ef4444;" id="reportAbsent">0</strong></div>
-                    <div class="report-item"><span>Attendance %</span><strong id="reportPercent">0%</strong></div>
-                    <button class="download-btn" id="downloadBtn">📥 Download Report</button>
-                    <button class="download-btn bulk-btn" id="bulkSmsBtn">📱 Send SMS to All Absent</button>
-                    <button class="download-btn" id="bulkWhatsAppBtn" style="background: #25D366;">💬 WhatsApp to All Absent</button>
-                </div>
-                <div class="card"><h3>❌ Absent Students List</h3><div id="absentList">No absent students</div></div>
+        <div id="students-tab" class="tab-content">
+            <div class="card">
+                <h2>All Students</h2>
+                <div id="allStudentsList"></div>
             </div>
+        </div>
 
-            <div class="tab-content" id="students-tab">
-                <div class="card"><h3>👥 All Students</h3><div id="allStudentsList"></div></div>
+        <div id="reports-tab" class="tab-content">
+            <div class="card">
+                <h2>Reports</h2>
+                <p>Reports will appear here</p>
             </div>
+        </div>
 
-            <div class="tab-content" id="settings-tab">
-                <div class="card">
-                    <h3>⚙️ App Settings</h3>
-                    <div class="report-item"><span>School Name</span><input type="text" id="settingSchoolName" class="settings-input" placeholder="SDMSMK"></div>
-                    <div class="report-item"><span>Class Name</span><input type="text" id="settingClassName" class="settings-input" placeholder="Class 302"></div>
-                    <div class="report-item"><span>Logged In As</span><strong id="currentUser">Teacher</strong></div>
-                    <button class="download-btn" id="saveSettingsBtn">💾 Save Settings</button>
-                </div>
-                <div class="card">
-                    <h3>📅 Holiday Management</h3>
-                    <input type="date" id="holidayDate" class="settings-input">
-                    <input type="text" id="holidayReason" class="settings-input" placeholder="Holiday Reason (Ex: Diwali)">
-                    <button class="download-btn" id="addHolidayBtn">➕ Add Holiday</button>
-                    <div class="holiday-list" id="holidayList"></div>
-                </div>
-                <div class="card">
-                    <h3>🎨 Choose Theme - 12 Colors</h3>
-                    <div class="theme-grid">
-                        <div class="theme-option" data-theme="purple" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Purple</div>
-                        <div class="theme-option" data-theme="green" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">Green</div>
-                        <div class="theme-option" data-theme="orange" style="background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);">Orange</div>
-                        <div class="theme-option" data-theme="pink" style="background: linear-gradient(135deg, #ec008c 0%, #fc6767 100%);">Pink</div>
-                        <div class="theme-option" data-theme="blue" style="background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);">Blue</div>
-                        <div class="theme-option" data-theme="red" style="background: linear-gradient(135deg, #f44336 0%, #ff6b6b 100%);">Red</div>
-                        <div class="theme-option" data-theme="teal" style="background: linear-gradient(135deg, #009688 0%, #4DB6AC 100%);">Teal</div>
-                                          <div class="photo-preview" id="editPhotoPreview">📷</div>
-                        <label class="photo-btn" for="editStudentPhoto">📸 Change Photo</label>
-                        <input type="file" id="editStudentPhoto" accept="image/*">
-                    </div>
-                    <input type="text" id="editRollNo" placeholder="Roll No" readonly style="background:#f0f0f0;">
-                    <input type="text" id="editStudentName" placeholder="Student Name">
-                    <div class="form-row">
-                        <input type="tel" id="editFatherNumber" placeholder="Father Mobile">
-                        <input type="tel" id="editMotherNumber" placeholder="Mother Mobile">
-                    </div>
-                    <input type="text" id="editStudentClass" placeholder="Class">
-                    <textarea id="editStudentAddress" placeholder="Address" rows="2"></textarea>
-                    <button class="download-btn" id="updateStudentBtn">💾 Update Student</button>
-                    <button class="close-modal" id="closeEditBtn">Cancel</button>
-                </div>
+        <div id="settings-tab" class="tab-content">
+            <div class="card">
+                <h2>Settings</h2>
+                <p>Settings page working ✅</p>
             </div>
+        </div>
+    </div>
 
-            <div class="modal" id="themeModal">
-                <div class="modal-box">
-                    <h3>Choose Theme Color</h3>
-                    <div class="theme-grid">
-                        <div class="theme-option" data-theme="purple" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">Purple</div>
-                        <div class="theme-option" data-theme="green" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">Green</div>
-                        <div class="theme-option" data-theme="orange" style="background: linear-gradient(135deg, #f12711 0%, #f5af19 100%);">Orange</div>
-                        <div class="theme-option" data-theme="pink" style="background: linear-gradient(135deg, #ec008c 0%, #fc6767 100%);">Pink</div>
-                        <div class="theme-option" data-theme="blue" style="background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);">Blue</div>
-                        <div class="theme-option" data-theme="red" style="background: linear-gradient(135deg, #f44336 0%, #ff6b6b 100%);">Red</div>
-                        <div class="theme-option" data-theme="teal" style="background: linear-gradient(135deg, #009688 0%, #4DB6AC 100%);">Teal</div>
-                        <div class="theme-option" data-theme="indigo" style="background: linear-gradient(135deg, #3F51B5 0%, #7986CB 100%);">Indigo</div>
-                        <div class="theme-option" data-theme="cyan" style="background: linear-gradient(135deg, #00BCD4 0%, #4DD0E1 100%);">Cyan</div>
-                        <div class="theme-option" data-theme="lime" style="background: linear-gradient(135deg, #CDDC39 0%, #DCE775 100%);">Lime</div>
-                        <div class="theme-option" data-theme="amber" style="background: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%);">Amber</div>
-                        <div class="theme-option" data-theme="rose" style="background: linear-gradient(135deg, #E91E63 0%, #F06292 100%);">Rose</div>
-                    </div>
-                    <button class="close-modal" id="closeThemeBtn">Close</button>
-                </div>
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Student</h2>
+                <button class="close-btn" id="closeEditBtn">&times;</button>
             </div>
+            <div class="input-group">
+                <label>Name</label>
+                <input type="text" id="editName">
+            </div>
+            <div class="input-group">
+                <label>Roll No</label>
+                <input type="text" id="editRoll">
+            </div>
+            <div class="input-group">
+                <label>Class</label>
+                <input type="text" id="editClass">
+            </div>
+            <button class="btn btn-success" id="updateStudentBtn">Update</button>
+        </div>
+    </div>
 
-            <script>
-                let students = JSON.parse(localStorage.getItem('students')) || [];
-                let attendanceHistory = JSON.parse(localStorage.getItem('attendanceHistory')) || {};
-                let settings = JSON.parse(localStorage.getItem('settings')) || { schoolName: 'SDMSMK', className: 'Class 302' };
-                let holidays = JSON.parse(localStorage.getItem('holidays')) || {};
-                let currentPhoto = null;
-                let editPhoto = null;
-                let editingRoll = null;
-                let calendarDate = new Date();
+    <script>
+        let students = JSON.parse(localStorage.getItem('students') || '[]');
+        let attendanceHistory = JSON.parse(localStorage.getItem('attendanceHistory') || '{}');
+        let settings = JSON.parse(localStorage.getItem('settings') || '{}');
+        let holidays = JSON.parse(localStorage.getItem('holidays') || '[]');
+        let currentEditId = null;
 
-                document.addEventListener('DOMContentLoaded', function() {
-            loadTheme();
-            loadSettings();
-            if(localStorage.getItem('loggedIn') === 'true') { 
-                showApp(); 
-            }
-            else {
-                document.getElementById('loginPage').style.display = 'flex';
-                document.getElementById('mainApp').style.display = 'none';
-                document.body.style.background = '#f0f4f8';
-            }
-            
-            // IKKADA PASTE CHEY
-            document.getElementById('signInBtn').addEventListener('click', login);
-            document.getElementById('logoutBtn').addEventListener('click', logout);
-            document.getElementById('themeBtn').addEventListener('click', showThemeSelector);
-            // ...migilina event listeners
-});
-                    document.getElementById('signInBtn').addEventListener('click', login);
-                    document.getElementById('logoutBtn').addEventListener('click', logout);
-                    document.getElementById('themeBtn').addEventListener('click', showThemeSelector);
-                    document.getElementById('closeThemeBtn').addEventListener('click', hideThemeSelector);
-                    document.getElementById('addStudentBtn').addEventListener('click', addStudent);
-                    document.getElementById('downloadBtn').addEventListener('click', downloadReport);
-                    document.getElementById('bulkSmsBtn').addEventListener('click', sendBulkSMS);
-                    document.getElementById('bulkWhatsAppBtn').addEventListener('click', sendBulkWhatsApp);
-                    document.getElementById('clearDataBtn').addEventListener('click', clearAllData);
-                    document.getElementById('exportDataBtn').addEventListener('click', exportData);
-                    document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
-                    document.getElementById('addHolidayBtn').addEventListener('click', addHoliday);
-                    document.getElementById('searchBox').addEventListener('keyup', renderStudents);
-                    document.getElementById('classFilter').addEventListener('change', renderStudents);
-                    document.getElementById('closeProfileBtn').addEventListener('click', closeProfile);
-                    document.getElementById('closeEditBtn').addEventListener('click', closeEdit);
-                    document.getElementById('updateStudentBtn').addEventListener('click', updateStudent);
-                    document.getElementById('studentPhoto').addEventListener('change', handlePhotoSelect);
-                    document.getElementById('editStudentPhoto').addEventListener('change', handleEditPhotoSelect);
-                    document.getElementById('prevMonth').addEventListener('click', () => { calendarDate.setMonth(calendarDate.getMonth() - 1); renderCalendar(); });
-                    document.getElementById('nextMonth').addEventListener('click', () => { calendarDate.setMonth(calendarDate.getMonth() + 1); renderCalendar(); });
-                    document.querySelectorAll('.tab').forEach(tab => { tab.addEventListener('click', function() { switchTab(this.dataset.tab, this); }); });
-                    document.querySelectorAll('.theme-option').forEach(opt => { opt.addEventListener('click', function() { setTheme(this.dataset.theme); }); });
-                });
-
-                function handlePhotoSelect(e) {
-                    const file = e.target.files[0];
-                    if(file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            currentPhoto = event.target.result;
-                            document.getElementById('photoPreview').innerHTML = `<img src="${currentPhoto}">`;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-
-                function handleEditPhotoSelect(e) {
-                    const file = e.target.files[0];
-                    if(file) {
-                        const reader = new FileReader();
-                        reader.onload = function(event) {
-                            editPhoto = event.target.result;
-                            document.getElementById('editPhotoPreview').innerHTML = `<img src="${editPhoto}">`;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                }
-
-                function isHoliday(dateStr) {
-                    let date = new Date(dateStr);
-                    let day = date.getDay();
-                    if(day === 0) return { holiday: true, reason: 'Sunday' };
-                    if(holidays[dateStr]) return { holiday: true, reason: holidays[dateStr] };
-                    return { holiday: false };
-                }
-
-                function loadTheme() { document.body.setAttribute('data-theme', localStorage.getItem('theme') || 'purple'); }
-                function loadSettings() {
-                    document.getElementById('schoolName').textContent = settings.schoolName;
-                    document.getElementById('className').textContent = settings.className + ' - Attendance';
-                    document.getElementById('settingSchoolName').value = settings.schoolName;
-                    document.getElementById('settingClassName').value = settings.className;
-                    renderHolidays();
-                    updateClassFilter();
-                }
-                function saveSettings() {
-                    settings.schoolName = document.getElementById('settingSchoolName').value.trim() || 'SDMSMK';
-                    settings.className = document.getElementById('settingClassName').value.trim() || 'Class 302';
-                    localStorage.setItem('settings', JSON.stringify(settings));
-                    loadSettings();
-                    alert('Settings saved!');
-                }
-                function addHoliday() {
-                    let date = document.getElementById('holidayDate').value;
-                    let reason = document.getElementById('holidayReason').value.trim() || 'Holiday';
-                    if(!date) { alert('Date select chey'); return; }
-                    holidays[date] = reason;
-                    localStorage.setItem('holidays', JSON.stringify(holidays));
-                    document.getElementById('holidayDate').value = '';
-                    document.getElementById('holidayReason').value = '';
-                    renderHolidays();
-                    renderCalendar();
-                    checkTodayHoliday();
-                }
-                function deleteHoliday(date) {
-                    if(confirm('Ee holiday delete cheyala?')) {
-                        delete holidays[date];
-                        localStorage.setItem('holidays', JSON.stringify(holidays));
-                        renderHolidays();
-                        renderCalendar();
-                    }
-                }
-                function renderHolidays() {
-                    let list = document.getElementById('holidayList');
-                    let keys = Object.keys(holidays).sort().reverse();
-                    if(keys.length === 0) {
-                        list.innerHTML = '<div style="text-align:center;color:#888;padding:10px;">No holidays added</div>';
-                        return;
-                    }
-                    list.innerHTML = keys.map(date => `
-                        <div class="holiday-item">
-                            <span>${new Date(date).toLocaleDateString('en-IN')} - ${holidays[date]}</span>
-                            <button onclick="deleteHoliday('${date}')" style="background:#ef4444;color:white;border:none;padding:4px 10px;border-radius:5px;cursor:pointer;">×</button>
-                        </div>
-                    `).join('');
-                }
-                function checkTodayHoliday() {
-                    let today = new Date().toISOString().split('T')[0];
-                    let holiday = isHoliday(today);
-                    if(holiday.holiday) {
-                        document.getElementById('holidayStatus').innerHTML = `<span class="holiday-badge">🎉 Today is Holiday: ${holiday.reason}</span>`;
-                    } else {
-                        document.getElementById('holidayStatus').innerHTML = '';
-                    }
-                }
-                function updateClassFilter() {
-                    let classes = [...new Set(students.map(s => s.class))];
-                    let filter = document.getElementById('classFilter');
-                    filter.innerHTML = '<option value="all">All Classes</option>' + classes.map(c => `<option value="${c}">${c}</option>`).join('');
-                }
-                function login() {
-                    let pass = document.getElementById('password').value.trim();
-                    if(pass === 'teacher123' || pass) {
-                        localStorage.setItem('loggedIn', 'true');
-                        localStorage.setItem('currentUser', 'Teacher');
-                        showApp();
-                    } else { alert('Password enter chey'); }
-                }
-                function logout() {
-                    if(confirm('Logout avvala?')) {
-                        localStorage.setItem('loggedIn', 'false');
-                        document.getElementById('loginPage').style.display = 'flex';
-                        document.getElementById('mainApp').style.display = 'none';
-                        document.getElementById('password').value = '';
-                        document.body.style.background = '#f0f4f8';
-                    }
-                }
-                function showApp() {
-                    document.getElementById('loginPage').style.display = 'none';
-                    document.getElementById('mainApp').style.display = 'block';
-                    document.body.style.background = 'var(--gradient)';
-                    document.getElementById('currentUser').textContent = localStorage.getItem('currentUser') || 'Teacher';
-                    document.getElementById('today').textContent = new Date().toLocaleDateString('en-IN');
-                    checkTodayHoliday();
-                    updateClassFilter();
-                    renderStudents();
-                    updateReports();
-                    renderCalendar();
-                }
-                function switchTab(tabName, btn) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(tabName + '-tab').classList.add('active');
-            if(tabName === 'reports') { updateReports(); renderCalendar(); }
-            if(tabName === 'students') renderAllStudents();
-                }
-                }
-                function showThemeSelector() { document.getElementById('themeModal').style.display = 'flex'; }
-                function hideThemeSelector() { document.getElementById('themeModal').style.display = 'none'; }
-                function setTheme(theme) {
-                    document.body.setAttribute('data-theme', theme);
-                    localStorage.setItem('theme', theme);
-                    hideThemeSelector();
-                }
-                function addStudent() {
-                    let roll = document.getElementById('rollNo').value.trim();
-                    let name = document.getElementById('studentName').value.trim();
-                    let fatherNum = document.getElementById('fatherNumber').value.trim();
-                    let motherNum = document.getElementById('motherNumber').value.trim();
-                    let studentClass = document.getElementById('studentClass').value.trim() || 'N/A';
-                    let address = document.getElementById('studentAddress').value.trim() || 'N/A';
-                    if(!roll ||!name ||!fatherNum ||!motherNum) { alert("Roll, Name, Father Number, Mother Number anni fill chey"); return; }
-                    if(fatherNum.length!== 10 || motherNum.length!== 10) { alert("Father & Mother numbers 10 digits undali\nEx: 9490475335\n+91 vaddu, 0 vaddu"); return; }
-                    if(students.find(s => s.roll === roll)) { alert("Ee Roll number already undi"); return; }
-                    students.push({ roll: roll, name: name, fatherNumber: fatherNum, motherNumber: motherNum, class: studentClass, address: address, photo: currentPhoto, status: 'Present', attendanceRecords: {} });
-                    saveData();
-                    updateClassFilter();
-                    renderStudents();
-                    document.getElementById('rollNo').value = '';
-                    document.getElementById('studentName').value = '';
-                    document.getElementById('fatherNumber').value = '';
-                    document.getElementById('motherNumber').value = '';
-                    document.getElementById('studentClass').value = '';
-                    document.getElementById('studentAddress').value = '';
-                    document.getElementById('studentPhoto').value = '';
-                    document.getElementById('photoPreview').innerHTML = '📷';
-                    currentPhoto = null;
-                }
-                function editStudent(roll) {
-                    let student = students.find(s => s.roll === roll);
-                    editingRoll = roll;
-                    editPhoto = student.photo;
-                    document.getElementById('editRollNo').value = student.roll;
-                    document.getElementById('editStudentName').value = student.name;
-                    document.getElementById('editFatherNumber').value = student.fatherNumber;
-                    document.getElementById('editMotherNumber').value = student.motherNumber;
-                    document.getElementById('editStudentClass').value = student.class;
-                    document.getElementById('editStudentAddress').value = student.address;
-                    document.getElementById('editPhotoPreview').innerHTML = student.photo? `<img src="${student.photo}">` : '📷';
-                    document.getElementById('closeEditBtn').addEventListener('click', closeEdit);
-                    document.getElementById('updateStudentBtn').addEventListener('click', updateStudent);
-                    document.getElementById('editModal').style.display = 'flex';
-                }
-                function updateStudent() {
-                    let name = document.getElementById('editStudentName').value.trim();
-                    let fatherNum = document.getElementById('editFatherNumber').value.trim();
-                    let motherNum = document.getElementById('editMotherNumber').value.trim();
-                    let studentClass = document.getElementById('editStudentClass').value.trim() || 'N/A';
-                    let address = document.getElementById('editStudentAddress').value.trim() || 'N/A';
-                    if(!name ||!fatherNum ||!motherNum) { alert("Name, Father Number, Mother Number anni fill chey"); return; }
-                    if(fatherNum.length!== 10 || motherNum.length!== 10) { alert("Father & Mother numbers 10 digits undali"); return; }
-                    let student = students.find(s => s.roll === editingRoll);
-                    student.name = name;
-                    student.fatherNumber = fatherNum;
-                    student.motherNumber = motherNum;
-                    student.class = studentClass;
-                    student.address = address;
-                    student.photo = editPhoto;
-                    saveData();
-                    updateClassFilter();
-                    renderStudents();
-                    closeEdit();
-                    alert('Student updated!');
-                }
-                function closeEdit() {
-            document.getElementById('editModal').style.display = 'none';
-            editingRoll = null;
-            editPhoto = null;
-        }
-        function markPresent(roll) {
-            let today = new Date().toISOString().split('T')[0];
-            if(isHoliday(today).holiday) { alert('Today is Holiday! Attendance mark cheyyalem.'); return; }
-            let student = students.find(s => s.roll === roll);
-            student.status = 'Present';
-            recordAttendance(roll, 'Present');
-            saveData();
-            renderStudents();
-        }
-        function markAbsent(roll) {
-            let today = new Date().toISOString().split('T')[0];
-            if(isHoliday(today).holiday) { alert('Today is Holiday! Attendance mark cheyyalem.'); return; }
-            let student = students.find(s => s.roll === roll);
-            student.status = 'Absent';
-            recordAttendance(roll, 'Absent');
-            saveData();
-            renderStudents();
-            let date = new Date().toLocaleDateString('en-IN');
-            let message = `${settings.schoolName}: Mee pillalu ${student.name} (${student.roll}) ee roju ${date} na college ki raaledu. Gamaninchagalaru.`;
-            let smsFather = `sms:${student.fatherNumber}?body=${encodeURIComponent(message)}`;
-            window.location.href = smsFather;
-            setTimeout(() => {
-                if(confirm('Father ki SMS pampanu. Mother ki kuda pampala?')) {
-                    let smsMother = `sms:${student.motherNumber}?body=${encodeURIComponent(message)}`;
-                    window.location.href = smsMother;
-                }
-                setTimeout(() => {
-                    if(confirm('WhatsApp lo kuda pampala?')) {
-                        let whatsappMsg = `https://wa.me/91${student.fatherNumber}?text=${encodeURIComponent(message)}`;
-                        window.open(whatsappMsg, '_blank');
-                    }
-                }, 1000);
-            }, 3000);
-        }
-        function recordAttendance(roll, status) {
-            let today = new Date().toISOString().split('T')[0];
-            let student = students.find(s => s.roll === roll);
-            if(!student.attendanceRecords) student.attendanceRecords = {};
-            student.attendanceRecords[today] = status;
-            if(!attendanceHistory[today]) attendanceHistory[today] = {};
-            attendanceHistory[today] = status;
-            localStorage.setItem('attendanceHistory', JSON.stringify(attendanceHistory));
-        }
-        function deleteStudent(roll) {
-            if(confirm('Ee student ni delete cheyala?')) {
-                students = students.filter(s => s.roll!== roll);
-                saveData();
-                updateClassFilter();
-                renderStudents();
-            }
-        }
-        function renderStudents() {
-            let list = document.getElementById('studentList');
-            let search = document.getElementById('searchBox').value.toLowerCase();
-            let classFilter = document.getElementById('classFilter').value;
-            let filtered = students.filter(s => {
-                let matchSearch = s.name.toLowerCase().includes(search) || s.roll.includes(search);
-                let matchClass = classFilter === 'all' || s.class === classFilter;
-                return matchSearch && matchClass;
-            });
-
-            let present = students.filter(s => s.status === 'Present').length;
-            let absent = students.filter(s => s.status === 'Absent').length;
-            document.getElementById('presentCount').textContent = present;
-            document.getElementById('absentCount').textContent = absent;
-            document.getElementById('totalCount').textContent = students.length;
-
-            if(filtered.length === 0) {
-                list.innerHTML = '<div style="text-align:center;color:white;padding:20px;">No students found</div>';
-                return;
-            }
-
-            list.innerHTML = filtered.map(s => {
-                let avatarContent = s.photo? `<img src="${s.photo}">` : s.name.charAt(0).toUpperCase();
-                return `
-                <div class="student-card" onclick="showProfile('${s.roll}')">
-                    <div style="display:flex;align-items:center;">
-                        <div class="student-avatar">${avatarContent}</div>
-                        <div class="student-info">
-                            <span class="roll-badge">Roll: ${s.roll}</span>
-                            <div class="student-name">${s.name}</div>
-                            <div class="student-status">Class: ${s.class} | Status: ${s.status}</div>
-                            <div class="parent-num">F: ${s.fatherNumber} | M: ${s.motherNumber}</div>
-                        </div>
-                    <div class="actions" onclick="event.stopPropagation()">
-                        <button class="btn btn-p" onclick="markPresent('${s.roll}')">P</button>
-                        <button class="btn btn-a" onclick="markAbsent('${s.roll}')">A</button>
-                        <button class="btn btn-e" onclick="editStudent('${s.roll}')">✏️</button>
-                        <button class="btn btn-x" onclick="deleteStudent('${s.roll}')">×</button>
-                    </div>
-                </div>
-            `}).join('');
-        }
-        function renderAllStudents() {
-            let list = document.getElementById('allStudentsList');
-            if(students.length === 0) {
-                list.innerHTML = '<div style="text-align:center;color:#888;padding:20px;">No students added yet</div>';
-                return;
-            }
-            list.innerHTML = students.map(s => {
-                let avatarContent = s.photo? `<img src="${s.photo}">` : s.name.charAt(0).toUpperCase();
-                let records = s.attendanceRecords || {};
-                let total = Object.keys(records).length;
-                let present = Object.values(records).filter(st => st === 'Present').length;
-                let percent = total > 0? Math.round((present/total)*100) : 0;
-                return `
-                <div class="student-card" onclick="showProfile('${s.roll}')">
-                    <div style="display:flex;align-items:center;">
-                        <div class="student-avatar">${avatarContent}</div>
-                        <div class="student-info">
-                            <span class="roll-badge">Roll: ${s.roll}</span>
-                            <div class="student-name">${s.name}</div>
-                            <div class="student-status">Class: ${s.class || 'N/A'} | Attendance: ${percent}%</div>
-                            <div class="parent-num">F: ${s.fatherNumber} | M: ${s.motherNumber}</div>
-                        </div>
-                    </div>
-                    <div class="actions" onclick="event.stopPropagation()">
-                        <button class="btn btn-e" onclick="editStudent('${s.roll}')">✏️</button>
-                    </div>
-                </div>
-            `}).join('');
-        }
-        function showProfile(roll) {
-            let student = students.find(s => s.roll === roll);
-            let avatarContent = student.photo? `<img src="${student.photo}">` : student.name.charAt(0).toUpperCase();
-            document.getElementById('profileAvatar').innerHTML = avatarContent;
-            document.getElementById('profileName').textContent = student.name;
-            document.getElementById('profileRoll').textContent = student.roll;
-            document.getElementById('profileClass').textContent = student.class || 'N/A';
-            document.getElementById('profileFather').textContent = student.fatherNumber;
-            document.getElementById('profileMother').textContent = student.motherNumber;
-            document.getElementById('profileAddress').textContent = student.address || 'N/A';
-
-            let records = student.attendanceRecords || {};
-            let total = Object.keys(records).length;
-            let present = Object.values(records).filter(s => s === 'Present').length;
-            let percent = total > 0? Math.round((present/total)*100) : 0;
-            document.getElementById('profileAttendance').textContent = `${present}/${total} days (${percent}%)`;
-
-            let historyHTML = '';
-            Object.keys(records).sort().reverse().forEach(date => {
-                let status = records[date];
-                let cls = status === 'Present'? 'history-present' : 'history-absent';
-                if(isHoliday(date).holiday) cls = 'history-holiday';
-                historyHTML += `<div class="history-item ${cls}"><span>${new Date(date).toLocaleDateString('en-IN')}</span><strong>${status}</strong></div>`;
-            });
-            document.getElementById('profileHistory').innerHTML = historyHTML || '<div style="text-align:center;color:#888;">No records</div>';
-            document.getElementById('profileModal').style.display = 'flex';
-        }
-        function closeProfile() { document.getElementById('profileModal').style.display = 'none'; }
-        function searchStudent() { renderStudents(); }
-        function updateReports() {
-            let today = new Date().toLocaleDateString('en-IN');
-            let present = students.filter(s => s.status === 'Present').length;
-            let absent = students.filter(s => s.status === 'Absent').length;
-            let total = students.length;
-            let percent = total > 0? Math.round((present/total)*100) : 0;
-
-            document.getElementById('reportDate').textContent = today;
-            document.getElementById('reportTotal').textContent = total;
-            document.getElementById('reportPresent').textContent = present;
-            document.getElementById('reportAbsent').textContent = absent;
-            document.getElementById('reportPercent').textContent = percent + '%';
-
-            let absentStudents = students.filter(s => s.status === 'Absent');
-            let absentHTML = absentStudents.length > 0? absentStudents.map(s => `<div class="report-item"><span>${s.roll} - ${s.name}</span><strong>${s.fatherNumber}</strong></div>`).join('') : '<div style="text-align:center;color:#888;">All Present 🎉</div>';
-            document.getElementById('absentList').innerHTML = absentHTML;
-        }
-        function renderCalendar() {
-            let year = calendarDate.getFullYear();
-            let month = calendarDate.getMonth();
-            document.getElementById('calendarMonth').textContent = calendarDate.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
-
-            let firstDay = new Date(year, month, 1).getDay();
-            let daysInMonth = new Date(year, month + 1, 0).getDate();
-            let today = new Date().toISOString().split('T')[0];
-
-            let grid = document.getElementById('calendarGrid');
-            grid.innerHTML = '<div class="calendar-day-header">Sun</div><div class="calendar-day-header">Mon</div><div class="calendar-day-header">Tue</div><div class="calendar-day-header">Wed</div><div class="calendar-day-header">Thu</div><div class="calendar-day-header">Fri</div><div class="calendar-day-header">Sat</div>';
-
-            for(let i = 0; i < firstDay; i++) {
-                grid.innerHTML += '<div class="calendar-day other-month"></div>';
-            }
-
-            for(let day = 1; day <= daysInMonth; day++) {
-                let dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-                let classes = 'calendar-day';
-                if(dateStr === today) classes += ' today';
-
-                let holiday = isHoliday(dateStr);
-                if(holiday.holiday) {
-                    classes += ' holiday';
-                } else if(attendanceHistory[dateStr]) {
-                    let statuses = Object.values(attendanceHistory[dateStr]);
-                    let presentCount = statuses.filter(s => s === 'Present').length;
-                    let absentCount = statuses.filter(s => s === 'Absent').length;
-                    if(absentCount > presentCount) classes += ' absent';
-                    else if(presentCount > 0) classes += ' present';
-                }
-
-                grid.innerHTML += `<div class="${classes}" title="${holiday.holiday? holiday.reason : dateStr}">${day}</div>`;
-            }
-        }
-        function sendBulkSMS() {
-            let absentStudents = students.filter(s => s.status === 'Absent');
-            if(absentStudents.length === 0) { alert('No absent students today!'); return; }
-            if(!confirm(`Send SMS to ${absentStudents.length} absent students parents?`)) return;
-
-            let date = new Date().toLocaleDateString('en-IN');
-            absentStudents.forEach((student, index) => {
-                setTimeout(() => {
-                    let message = `${settings.schoolName}: Mee pillalu ${student.name} (${student.roll}) ee roju ${date} na college ki raaledu. Gamaninchagalaru.`;
-                    window.open(`sms:${student.fatherNumber}?body=${encodeURIComponent(message)}`);
-                }, index * 2000);
-            });
-        }
-        function sendBulkWhatsApp() {
-            let absentStudents = students.filter(s => s.status === 'Absent');
-            if(absentStudents.length === 0) { alert('No absent students today!'); return; }
-            if(!confirm(`Send WhatsApp to ${absentStudents.length} absent students parents?`)) return;
-
-            let date = new Date().toLocaleDateString('en-IN');
-            absentStudents.forEach((student, index) => {
-                setTimeout(() => {
-                    let message = `${settings.schoolName}: Mee pillalu ${student.name} (${student.roll}) ee roju ${date} na college ki raaledu. Gamaninchagalaru.`;
-                    window.open(`https://wa.me/91${student.fatherNumber}?text=${encodeURIComponent(message)}`, '_blank');
-                }, index * 3000);
-            });
-        }
-        function downloadReport() {
-            let today = new Date().toLocaleDateString('en-IN');
-            let present = students.filter(s => s.status === 'Present').length;
-            let absent = students.filter(s => s.status === 'Absent').length;
-            let total = students.length;
-            let percent = total > 0? Math.round((present/total)*100) : 0;
-
-            let csv = `SDMSMK Attendance Report\nDate: ${today}\nTotal: ${total}\nPresent: ${present}\nAbsent: ${absent}\nPercentage: ${percent}%\n\nRoll No,Name,Class,Status,Father,Mother\n`;
-            students.forEach(s => {
-                csv += `${s.roll},${s.name},${s.class},${s.status},${s.fatherNumber},${s.motherNumber}\n`;
-            });
-
-            let blob = new Blob([csv], { type: 'text/csv' });
-            let url = URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = `Attendance_${today.replace(/\//g,'-')}.csv`;
-            a.click();
-        }
-        function saveData() { localStorage.setItem('students', JSON.stringify(students)); }
-        function clearAllData() {
-            if(confirm('Anni students delete cheyala? Ee action reverse cheyyalem!')) {
-                students = [];
-                attendanceHistory = {};
-                localStorage.removeItem('students');
-                localStorage.removeItem('attendanceHistory');
-                updateClassFilter();
-                renderStudents();
-                updateReports();
-                renderCalendar();
-                alert('All data cleared!');
-            }
-        }
-        function exportData() {
-            let data = { students: students, attendanceHistory: attendanceHistory, settings: settings, holidays: holidays };
-            let blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            let url = URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = `SDMSMK_Backup_${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-        }
-            function login() {
+        function login() {
             let pass = document.getElementById('password').value;
             if(pass === 'teacher123') {
                 localStorage.setItem('loggedIn', 'true');
@@ -832,16 +322,127 @@
             document.body.style.background = 'var(--gradient)';
             document.getElementById('today').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             checkTodayHoliday();
-            updateClassFilter();
             renderStudents();
-            updateReports();
-            renderCalendar();
         }
 
         function logout() {
             localStorage.removeItem('loggedIn');
             location.reload();
-                }
+        }
+
+        function switchTab(tabName, btn) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabName + '-tab').classList.add('active');
+            if(tabName === 'reports') { updateReports(); renderCalendar(); }
+            if(tabName === 'students') renderAllStudents();
+        }
+
+        function renderStudents() {
+            let list = document.getElementById('studentsList');
+            if(students.length === 0) {
+                list.innerHTML = '<p>No students added yet</p>';
+                return;
+            }
+            list.innerHTML = students.map(s => `
+                <div class="student-card">
+                    <div class="student-info">
+                        <div class="student-avatar">${s.name.charAt(0)}</div>
+                        <div class="student-details">
+                            <h3>${s.name}</h3>
+                            <p>Roll: ${s.roll} | Class: ${s.class}</p>
+                        </div>
+                    </div>
+                    <div class="attendance-actions">
+                        <button class="att-btn present" onclick="markAttendance(${s.id}, 'present')">Present</button>
+                        <button class="att-btn absent" onclick="markAttendance(${s.id}, 'absent')">Absent</button>
+                        <button class="att-btn edit-btn" onclick="openEdit(${s.id})">✏️</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAllStudents() {
+            let list = document.getElementById('allStudentsList');
+            list.innerHTML = students.map(s => `
+                <div class="student-card">
+                    <div class="student-info">
+                        <div class="student-avatar">${s.name.charAt(0)}</div>
+                        <div class="student-details">
+                            <h3>${s.name}</h3>
+                            <p>Roll: ${s.roll} | Class: ${s.class}</p>
+                        </div>
+                    </div>
+                    <button class="att-btn edit-btn" onclick="openEdit(${s.id})">✏️ Edit</button>
+                </div>
+            `).join('');
+        }
+
+        function openEdit(id) {
+            let student = students.find(s => s.id === id);
+            currentEditId = id;
+            document.getElementById('editName').value = student.name;
+            document.getElementById('editRoll').value = student.roll;
+            document.getElementById('editClass').value = student.class;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeEdit() {
+            document.getElementById('editModal').classList.remove('active');
+            currentEditId = null;
+        }
+
+        function updateStudent() {
+            if(currentEditId === null) return;
+            let student = students.find(s => s.id === currentEditId);
+            student.name = document.getElementById('editName').value;
+            student.roll = document.getElementById('editRoll').value;
+            student.class = document.getElementById('editClass').value;
+            localStorage.setItem('students', JSON.stringify(students));
+            renderStudents();
+            renderAllStudents();
+            closeEdit();
+        }
+
+        function markAttendance(id, status) {
+            let today = new Date().toISOString().split('T')[0];
+            if(!attendanceHistory[today]) attendanceHistory[today] = {};
+            attendanceHistory[today][id] = status;
+            localStorage.setItem('attendanceHistory', JSON.stringify(attendanceHistory));
+            alert('Marked ' + status);
+        }
+
+        function checkTodayHoliday() {
+            let today = new Date().toISOString().split('T')[0];
+            if(holidays.includes(today)) {
+                alert('Today is a holiday!');
+            }
+        }
+
+        function updateReports() {}
+        function renderCalendar() {}
+        function loadTheme() {}
+        function loadSettings() {}
+        function showThemeSelector() { alert('Theme selector coming soon'); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTheme();
+            loadSettings();
+            if(localStorage.getItem('loggedIn') === 'true') {
+                showApp();
+            } else {
+                document.getElementById('loginPage').style.display = 'flex';
+                document.getElementById('mainApp').style.display = 'none';
+                document.body.style.background = '#f0f4f8';
+            }
+
+            document.getElementById('signInBtn').addEventListener('click', login);
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            document.getElementById('themeBtn').addEventListener('click', showThemeSelector);
+            document.getElementById('closeEditBtn').addEventListener('click', closeEdit);
+            document.getElementById('updateStudentBtn').addEventListener('click', updateStudent);
+        });
     </script>
 </body>
-</html>
+    </html>
