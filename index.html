@@ -422,7 +422,9 @@
         }
 
         function renderStudents() {
-            let list = document.getElementById('studentsList');
+                document.getElementById('studentsList').innerHTML = studentsHTML;
+    showAbsentSummary(); // EE LINE ADD CHEY 👈
+        }
             let filtered = selectedClass === 'all'? students : students.filter(s => s.class === selectedClass);
             if(filtered.length === 0) { list.innerHTML = '<p>No students in this class.</p>'; return; }
             list.innerHTML = filtered.map(s => {
@@ -762,6 +764,40 @@
                     card.style.display = 'none';
                 }
             });
+         }
+                 // NEW: Calculate total absent days for a student
+        function getAbsentCount(studentId) {
+            let count = 0;
+            for(let date in attendanceHistory) {
+                if(attendanceHistory[date][studentId] === 'absent') {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        // UPDATE: displayStudents function - last lo ee code add chey
+        function showAbsentSummary() {
+            let selectedDate = document.getElementById('attendanceDate').value;
+            let todayData = attendanceHistory[selectedDate] || {};
+            let absentStudents = [];
+
+            students.forEach(student => {
+                if(todayData[student.id] === 'absent') {
+                    absentStudents.push(student.name);
+                }
+            });
+
+            let summaryBox = document.getElementById('absentSummary');
+            let absentListDiv = document.getElementById('absentList');
+            document.getElementById('summaryDate').innerText = selectedDate;
+
+            if(absentStudents.length > 0) {
+                absentListDiv.innerHTML = absentStudents.map(name => `• ${name}`).join('<br>');
+                summaryBox.style.display = 'block';
+            } else {
+                summaryBox.style.display = 'none';
+            }
          }
     </script>
 </body>
