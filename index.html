@@ -40,75 +40,75 @@
         body { background: var(--gradient); min-height: 100vh; transition: all 0.3s; }
 
         /* LOGIN PAGE */
-    .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-    .login-box { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 100%; max-width: 400px; }
-    .login-box h2 { text-align: center; color: var(--primary); margin-bottom: 10px; font-size: 28px; }
-    .login-box p { text-align: center; color: #888; margin-bottom: 30px; }
-    .login-box input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; }
-    .login-box input:focus { outline: none; border-color: var(--primary); }
-    .login-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-    .login-btn:hover { opacity: 0.9; }
-    .login-note { text-align: center; margin-top: 15px; font-size: 13px; color: #888; }
+   .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+   .login-box { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); width: 100%; max-width: 400px; }
+   .login-box h2 { text-align: center; color: var(--primary); margin-bottom: 10px; font-size: 28px; }
+   .login-box p { text-align: center; color: #888; margin-bottom: 30px; }
+   .login-box input { width: 100%; padding: 14px; margin: 10px 0; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 15px; }
+   .login-box input:focus { outline: none; border-color: var(--primary); }
+   .login-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+   .login-btn:hover { opacity: 0.9; }
+   .login-note { text-align: center; margin-top: 15px; font-size: 13px; color: #888; }
 
         /* MAIN APP */
-    .app-container { display: none; }
-    .header { background: var(--gradient); color: white; padding: 20px; text-align: center; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-    .header h1 { font-size: 26px; font-weight: 600; }
-    .header span { font-size: 14px; opacity: 0.9; }
-    .header-btns { position: absolute; right: 15px; top: 15px; display: flex; gap: 8px; }
-    .theme-btn,.logout { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; }
-    .theme-btn:hover,.logout:hover { background: rgba(255,255,255,0.3); }
-    .tabs { display: flex; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .tab { flex: 1; padding: 14px; text-align: center; cursor: pointer; border: none; background: white; font-weight: 500; color: #666; }
-    .tab.active { background: #f8f9ff; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: bold; }
-    .container { padding: 20px 15px; max-width: 650px; margin: 0 auto; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .date { text-align: center; color: white; margin: 15px 0; font-size: 16px; font-weight: 500; }
-    .add-form { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .add-form h3 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
-    .add-form input { width: 100%; padding: 13px; margin: 8px 0; border: 2px solid #e8e8e8; border-radius: 10px; font-size: 14px; }
-    .add-form input:focus { outline: none; border-color: var(--primary); }
-    .add-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-    .add-btn:hover { opacity: 0.9; }
-    .search { width: 100%; padding: 13px; margin: 15px 0; border: 2px solid white; border-radius: 10px; background: white; font-size: 14px; }
-    .stats { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .stats div { text-align: center; }
-    .stats.label { font-size: 12px; color: #888; margin-bottom: 5px; }
-    .stats.value { font-size: 24px; font-weight: bold; color: var(--primary); }
-    .student-card { background: white; padding: 15px; margin: 12px 0; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 5px solid var(--primary); transition: transform 0.2s; }
-    .student-card:hover { transform: translateY(-2px); }
-    .student-info { flex: 1; }
-    .roll-badge { background: var(--gradient); color: white; padding: 4px 10px; border-radius: 15px; font-size: 12px; display: inline-block; margin-bottom: 8px; font-weight: 600; }
-    .student-name { font-size: 17px; font-weight: 600; margin: 5px 0; color: #333; }
-    .student-status { font-size: 13px; color: #666; margin: 3px 0; }
-    .parent-num { font-size: 12px; color: #888; }
-    .actions { display: flex; gap: 8px; }
-    .btn { width: 45px; height: 45px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; transition: transform 0.2s; }
-    .btn:hover { transform: scale(1.1); }
-    .btn-p { background: #10b981; color: white; }
-    .btn-a { background: #ef4444; color: white; }
-    .btn-x { background: #6b7280; color: white; }
+   .app-container { display: none; }
+   .header { background: var(--gradient); color: white; padding: 20px; text-align: center; position: relative; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+   .header h1 { font-size: 26px; font-weight: 600; }
+   .header span { font-size: 14px; opacity: 0.9; }
+   .header-btns { position: absolute; right: 15px; top: 15px; display: flex; gap: 8px; }
+   .theme-btn,.logout { background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 13px; }
+   .theme-btn:hover,.logout:hover { background: rgba(255,255,255,0.3); }
+   .tabs { display: flex; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+   .tab { flex: 1; padding: 14px; text-align: center; cursor: pointer; border: none; background: white; font-weight: 500; color: #666; }
+   .tab.active { background: #f8f9ff; border-bottom: 3px solid var(--primary); color: var(--primary); font-weight: bold; }
+   .container { padding: 20px 15px; max-width: 650px; margin: 0 auto; }
+   .tab-content { display: none; }
+   .tab-content.active { display: block; }
+   .date { text-align: center; color: white; margin: 15px 0; font-size: 16px; font-weight: 500; }
+   .add-form { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+   .add-form h3 { color: var(--primary); margin-bottom: 15px; font-size: 18px; }
+   .add-form input { width: 100%; padding: 13px; margin: 8px 0; border: 2px solid #e8e8e8; border-radius: 10px; font-size: 14px; }
+   .add-form input:focus { outline: none; border-color: var(--primary); }
+   .add-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+   .add-btn:hover { opacity: 0.9; }
+   .search { width: 100%; padding: 13px; margin: 15px 0; border: 2px solid white; border-radius: 10px; background: white; font-size: 14px; }
+   .stats { display: flex; justify-content: space-around; background: white; padding: 15px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+   .stats div { text-align: center; }
+   .stats.label { font-size: 12px; color: #888; margin-bottom: 5px; }
+   .stats.value { font-size: 24px; font-weight: bold; color: var(--primary); }
+   .student-card { background: white; padding: 15px; margin: 12px 0; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 5px solid var(--primary); transition: transform 0.2s; }
+   .student-card:hover { transform: translateY(-2px); }
+   .student-info { flex: 1; }
+   .roll-badge { background: var(--gradient); color: white; padding: 4px 10px; border-radius: 15px; font-size: 12px; display: inline-block; margin-bottom: 8px; font-weight: 600; }
+   .student-name { font-size: 17px; font-weight: 600; margin: 5px 0; color: #333; }
+   .student-status { font-size: 13px; color: #666; margin: 3px 0; }
+   .parent-num { font-size: 12px; color: #888; }
+   .actions { display: flex; gap: 8px; }
+   .btn { width: 45px; height: 45px; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; font-weight: bold; transition: transform 0.2s; }
+   .btn:hover { transform: scale(1.1); }
+   .btn-p { background: #10b981; color: white; }
+   .btn-a { background: #ef4444; color: white; }
+   .btn-x { background: #6b7280; color: white; }
 
         /* REPORTS & SETTINGS */
-    .card { background: white; padding: 20px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-    .card h3 { color: var(--primary); margin-bottom: 15px; }
-    .report-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
-    .report-item:last-child { border-bottom: none; }
-    .download-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+   .card { background: white; padding: 20px; border-radius: 15px; margin: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+   .card h3 { color: var(--primary); margin-bottom: 15px; }
+   .report-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; }
+   .report-item:last-child { border-bottom: none; }
+   .download-btn { width: 100%; background: var(--gradient); color: white; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
         /* THEME SELECTOR */
-    .theme-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-    .theme-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; }
-    .theme-box h3 { color: #333; margin-bottom: 20px; text-align: center; }
-    .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .theme-option { padding: 20px; border-radius: 15px; cursor: pointer; text-align: center; color: white; font-weight: bold; border: 3px solid transparent; }
-    .theme-option:hover { border-color: #333; }
-    .theme-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-    .theme-green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-    .theme-orange { background: linear-gradient(135deg, #f12711 0%, #f5af19 100%); }
-    .theme-pink { background: linear-gradient(135deg, #ec008c 0%, #fc6767 100%); }
-    .close-theme { width: 100%; margin-top: 15px; padding: 12px; background: #6b7280; color: white; border: none; border-radius: 10px; cursor: pointer; }
+   .theme-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+   .theme-box { background: white; padding: 25px; border-radius: 20px; width: 90%; max-width: 350px; }
+   .theme-box h3 { color: #333; margin-bottom: 20px; text-align: center; }
+   .theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+   .theme-option { padding: 20px; border-radius: 15px; cursor: pointer; text-align: center; color: white; font-weight: bold; border: 3px solid transparent; }
+   .theme-option:hover { border-color: #333; }
+   .theme-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+   .theme-green { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+   .theme-orange { background: linear-gradient(135deg, #f12711 0%, #f5af19 100%); }
+   .theme-pink { background: linear-gradient(135deg, #ec008c 0%, #fc6767 100%); }
+   .close-theme { width: 100%; margin-top: 15px; padding: 12px; background: #6b7280; color: white; border: none; border-radius: 10px; cursor: pointer; }
     </style>
 </head>
 <body data-theme="orange">
@@ -136,9 +136,9 @@
         </div>
 
         <div class="tabs">
-            <button class="tab active" onclick="switchTab('attendance')">Attendance</button>
-            <button class="tab" onclick="switchTab('reports')">Reports</button>
-            <button class="tab" onclick="switchTab('settings')">Settings</button>
+            <button class="tab active" onclick="switchTab('attendance', this)">Attendance</button>
+            <button class="tab" onclick="switchTab('reports', this)">Reports</button>
+            <button class="tab" onclick="switchTab('settings', this)">Settings</button>
         </div>
 
         <div class="container">
@@ -253,8 +253,10 @@
         document.body.setAttribute('data-theme', savedTheme);
 
         // Check if already logged in
-        if(localStorage.getItem('loggedIn') === 'true') {
-            showApp();
+        window.onload = function() {
+            if(localStorage.getItem('loggedIn') === 'true') {
+                showApp();
+            }
         }
 
         function login() {
@@ -286,12 +288,12 @@
             updateReports();
         }
 
-        // TAB SWITCHING
-        function switchTab(tabName) {
+        // TAB SWITCHING - FIXED
+        function switchTab(tabName, btn) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
 
-            event.target.classList.add('active');
+            btn.classList.add('active');
             document.getElementById(tabName + '-tab').classList.add('active');
 
             if(tabName === 'reports') updateReports();
@@ -418,4 +420,4 @@
 
         function updateReports() {
             let present = students.filter(s => s.status === 'Present').length;
-            let absent = students.filter(s => s.status === 'Absent
+            let absent = students.filter(s => s.
