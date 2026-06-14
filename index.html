@@ -181,15 +181,10 @@
                 <div class="card">
                     <h2>Mark Attendance</h2>
                    <!-- IKKADA PASTE CHEY 👇 -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0;">
-                <input type="text" id="searchStudent" placeholder="🔍 Search by Name/Roll..."
-                       onkeyup="filterStudents()"
-                       style="padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary);">
-
-                <input type="date" id="attendanceDate"
-                       onchange="loadAttendanceByDate()"
-                       style="padding: 12px; border: 2px solid var(--border-color); border-radius: 8px; background: var(--bg-primary); color: var(--text-primary);">
-            </div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;">
+            <input type="text" id="searchBox" placeholder="🔍 Search..." onkeyup="renderStudents()" style="flex: 1; min-width: 200px; padding: 12px; border: 2px solid var(--border-color); border-radius: 12px; background: var(--bg-secondary); color: var(--text-primary);">
+            <input type="date" id="attendanceDate" onchange="renderStudents()" style="padding: 12px; border: 2px solid var(--border-color); border-radius: 12px; background: var(--bg-secondary); color: var(--text-primary);">
+                    </div>
             <div id="dateLabel" style="text-align: center; margin-bottom: 10px; font-weight: bold; color: var(--accent-color);">Today: 2026-06-14</div>
             <!-- PASTE END -->
                     <div class="class-filter" id="classFilter"></div>
@@ -199,6 +194,12 @@
                         <div id="smsLogContent"></div>
                     </div>
                     <div id="studentsList"></div>
+                    <!-- NEW: Absent Summary -->
+<div id="absentSummary" style="margin-top: 15px; padding: 15px; background: var(--bg-secondary); border-radius: 12px; border-left: 4px solid #ff6b6b; display: none;">
+    <h4 style="margin: 0 0 10px 0; color: #ff6b6b;">❌ Absent Students on <span id="summaryDate"></span></h4>
+    <div id="absentList" style="font-size: 14px; line-height: 1.8;"></div>
+</div>
+<!-- NEW END -->
                 </div>
             </div>
 
@@ -415,13 +416,12 @@
             document.getElementById('newMotherMobile').value = '';
             document.getElementById('newAddress').value = '';
         }
-
-        function getTodayStatus(id) {
-            let today = new Date().toISOString().split('T')[0];
-            return attendanceHistory[today]? attendanceHistory[today][id] : null;
-        }
-
-        function renderStudents() {
+                 function getTodayStatus(id) {
+            let selectedDate = document.getElementById('attendanceDate')? document.getElementById('attendanceDate').value : new Date().toISOString().split('T')[0];
+            let status = attendanceHistory[selectedDate]? attendanceHistory[selectedDate][id] : 'none';
+            return status;
+                 }
+             function renderStudents() {
                 document.getElementById('studentsList').innerHTML = studentsHTML;
     showAbsentSummary(); // EE LINE ADD CHEY 👈
         }
@@ -461,29 +461,33 @@
                 </div>
             `}).join('');
         }
-
-        function renderAllStudents() {
-            let list = document.getElementById('allStudentsList');
-            if(students.length === 0) { list.innerHTML = '<p>No students yet</p>'; return; }
-            list.innerHTML = students.map(s => `
-                <div class="student-card">
+                 function renderStudents() {
+            let list = document.getElementById('studentsList');
+            let search = document.getElementById('searchBox').value.toLowerCase();
+            let filtered = students.filter(s => s.name.toLowerCase().includes(search) || s.roll.includes(search));
+            if(students.length === 0) { list.innerHTML = '<div class="empty-state">No students yet.</div>'; return; }
+            list.innerHTML = filtered.map(s => {
+                let status = getTodayStatus(s.id);
+                let statusClass = status === 'present'? 'present' : status === 'absent'? 'absent' : '';
+                return `
+                <div class="student-card ${statusClass}">
                     <div class="student-info">
                         <div class="student-avatar">${s.name.charAt(0)}</div>
                         <div class="student-details">
                             <h3>${s.name}</h3>
-                            <p>Roll: ${s.roll} | Class: ${s.class}</p>
-                            <div class="parent-info">
-                                <p><b>Father:</b> ${s.fatherName || 'N/A'} - ${s.fatherMobile || 'N/A'}</p>
-                                <p><b>Mother:</b> ${s.motherName || 'N/A'} - ${s.motherMobile || 'N/A'}</p>
-                                <p><b>Address:</b> ${s.address || 'N/A'}</p>
-                            </div>
+                            <p>Roll: ${s.roll} | Class: ${s.class}<br>
+                            <span style="color: #ff6b6b; font-size: 12px;">Total Absent: ${getAbsentCount(s.id)} days</span></p>
                         </div>
-                    <button class="att-btn edit-btn" onclick="openEdit(${s.id})">✏️ Edit</button>
+                    </div>
+                    <div class="attendance-actions">
+                        <button class="att-btn present-btn" onclick="markAttendance(${s.id}, 'present')">✅ Present</button>
+                        <button class="att-btn absent-btn" onclick="markAttendance(${s.id}, 'absent')">❌ Absent</button>
+                    </div>
                 </div>
-            `).join('');
-        }
-
-        function openEdit(id) {
+            `}).join('');
+            showAbsentSummary();
+                 }
+          function openEdit(id) {
             let student = students.find(s => s.id === id);
             currentEditId = id;
             document.getElementById('editName').value = student.name;
@@ -797,6 +801,42 @@
                 summaryBox.style.display = 'block';
             } else {
                 summaryBox.style.display = 'none';
+            }
+         }
+                 // NEW: Calculate total absent days for a student
+        function getAbsentCount(studentId) {
+            let count = 0;
+            for(let date in attendanceHistory) {
+                if(attendanceHistory[date][studentId] === 'absent') {
+                    count++;
+                }
+            }
+            return count;
+        }
+
+        // NEW: Show absent list for selected date
+        function showAbsentSummary() {
+            let selectedDate = document.getElementById('attendanceDate').value;
+            if(!selectedDate) return;
+            let todayData = attendanceHistory[selectedDate] || {};
+            let absentStudents = [];
+
+            students.forEach(student => {
+                if(todayData[student.id] === 'absent') {
+                    absentStudents.push(student.name + ' (' + student.roll + ')');
+                }
+            });
+
+            let summaryBox = document.getElementById('absentSummary');
+            let absentListDiv = document.getElementById('absentList');
+            document.getElementById('summaryDate').innerText = selectedDate;
+
+            if(absentStudents.length > 0) {
+                absentListDiv.innerHTML = absentStudents.map(name => `• ${name}`).join('<br>');
+                summaryBox.style.display = 'block';
+            } else {
+                absentListDiv.innerHTML = '✅ All Present';
+                summaryBox.style.display = 'block';
             }
          }
     </script>
